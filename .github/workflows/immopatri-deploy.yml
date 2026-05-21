@@ -1,0 +1,108 @@
+# ImmoPatri — DevSecOps Pipeline (DAT v1.0, Partie 3.4)
+#
+# Declenche manuellement (workflow_dispatch) pour eviter tout deploiement VPS
+# involontaire. Le depot dispose deja d'un CI d'integration (ci.yml / pr-ci.yml /
+# codeql-analysis.yml) ; ce workflow ajoute la chaine deploiement decrite au DAT.
+# Le job `deploy` exige les secrets VPS_HOST / VPS_USER / VPS_SSH_KEY / APP_URL.
+
+name: ImmoPatri — DevSecOps Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deployer sur le VPS apres build (true/false)'
+        required: false
+        default: 'false'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  sast:
+    name: SAST & audit dependances
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn npm audit --severity high || true
+      - uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/nodejs p/owasp-top-ten p/secrets
+
+  test:
+    name: Tests unitaires & couverture
+    needs: sast
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn workspace @microrealestate/api test --coverage
+
+  build:
+    name: Build Docker + scan Trivy
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      - uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+
+  deploy:
+    name: Deploy VPS (SSH + docker compose)
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.deploy == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/immopatri
+            git pull origin master
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker system prune -f
+
+  e2e:
+    name: Tests E2E Playwright
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.deploy == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn playwright install --with-deps
+      - run: yarn playwright test
+        env:
+          BASE_URL: ${{ secrets.APP_URL }}
