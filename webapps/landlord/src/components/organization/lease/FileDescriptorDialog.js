@@ -4,7 +4,7 @@ import {
   RadioField,
   RadioFieldGroup,
   TextField
-} from '@microrealestate/commonui/components';
+} from '@immopatri/commonui/components';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Button } from '../../ui/button';
 import ResponsiveDialog from '../../ResponsiveDialog';

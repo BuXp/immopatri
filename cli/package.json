@@ -1,7 +1,7 @@
 {
-  "name": "@microrealestate/cli",
+  "name": "@immopatri/cli",
   "version": "1.0.0",
-  "description": "The MicroRealEstate CLI",
+  "description": "The ImmoPatri CLI",
   "main": "src/index.js",
   "private": true,
   "scripts": {

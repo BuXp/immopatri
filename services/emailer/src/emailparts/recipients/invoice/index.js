@@ -1,4 +1,4 @@
-import { Service } from '@microrealestate/common';
+import { Service } from '@immopatri/common';
 
 export function get(recordId, params, data) {
   if (!data.tenant && !data.tenant.contacts) {

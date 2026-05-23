@@ -1,5 +1,5 @@
 {
-  "name": "@microrealestate/authenticator",
+  "name": "@immopatri/authenticator",
   "version": "1.0.0",
   "description": "Authenticator service",
   "main": "./src/index.js",
@@ -42,7 +42,7 @@
     "typescript": "5.5.4"
   },
   "dependencies": {
-    "@microrealestate/common": "*",
+    "@immopatri/common": "*",
     "axios": "1.8.4",
     "bcrypt": "5.1.1",
     "jsonwebtoken": "9.0.0",

@@ -1,6 +1,6 @@
 import * as Express from 'express';
 import { Controllers } from './controllers/index.js';
-import { Middlewares } from '@microrealestate/common';
+import { Middlewares } from '@immopatri/common';
 
 const routes = Express.Router();
 

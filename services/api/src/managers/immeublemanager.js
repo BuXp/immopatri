@@ -1,4 +1,4 @@
-import { Collections } from '@microrealestate/common';
+import { Collections } from '@immopatri/common';
 import { validateImmeuble } from './validation.js';
 
 export async function all(req, res) {

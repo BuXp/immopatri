@@ -1,4 +1,4 @@
-import { Collections, logger, ServiceError } from '@microrealestate/common';
+import { Collections, logger, ServiceError } from '@immopatri/common';
 
 /**
  * @returns a Set of leaseId (_id)

@@ -1,5 +1,5 @@
 import * as Express from 'express';
-import { Middlewares, Service } from '@microrealestate/common';
+import { Middlewares, Service } from '@immopatri/common';
 
 const routes = Express.Router();
 routes.delete(

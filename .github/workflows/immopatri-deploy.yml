@@ -46,7 +46,7 @@ jobs:
           node-version: '20'
       - run: corepack enable
       - run: yarn install --immutable
-      - run: yarn workspace @microrealestate/api test --coverage
+      - run: yarn workspace @immopatri/api test --coverage
 
   build:
     name: Build Docker + scan Trivy

@@ -1,5 +1,5 @@
 {
-  "name": "@microrealestate/pdfgenerator",
+  "name": "@immopatri/pdfgenerator",
   "version": "1.0.0",
   "description": "Generates PDF documents (letters, contracts, invoices...)",
   "main": "./src/index.js",
@@ -24,7 +24,7 @@
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css}'"
   },
   "keywords": [
-    "microrealestate",
+    "immopatri",
     "realestate",
     "document",
     "pdf"
@@ -32,7 +32,7 @@
   "author": "Camel Aissani",
   "license": "MIT",
   "dependencies": {
-    "@microrealestate/common": "*",
+    "@immopatri/common": "*",
     "async-mutex": "0.5.0",
     "aws-sdk": "2.1677.0",
     "ejs": "3.1.10",

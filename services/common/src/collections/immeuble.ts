@@ -1,4 +1,4 @@
-import { CollectionTypes } from '@microrealestate/types';
+import { CollectionTypes } from '@immopatri/types';
 import mongoose from 'mongoose';
 import Realm from './realm.js';
 import Site from './site.js';

@@ -1,7 +1,7 @@
 # ImmoPatri — Roadmap d'implémentation du DAT v1.0
 
 Ce document mappe le Document d'Architecture Technique (DAT v1.0) sur
-l'architecture **réelle** du monorepo (fork MicroRealEstate), qui diffère de
+l'architecture **réelle** du monorepo (fork ImmoPatri), qui diffère de
 l'arborescence simplifiée supposée par les prompts du DAT (`api/models/*.js`,
 `frontend/pages/*`).
 
@@ -20,7 +20,7 @@ l'arborescence simplifiée supposée par les prompts du DAT (`api/models/*.js`,
 
 ## Multi-tenant
 
-MRE isole les données par `realmId` (organisation), injecté par le middleware
+IP isole les données par `realmId` (organisation), injecté par le middleware
 `checkOrganization`. Toutes les nouvelles collections embarquent `realmId` et
 tous les managers filtrent dessus — c'est la base du contrôle d'accès RBAC
 server-side exigé au DAT 3.6.
@@ -44,4 +44,4 @@ server-side exigé au DAT 3.6.
    Immeubles, détail Immeuble > Lots, breadcrumb.
 2. Sélecteur multi-propriétaires réutilisable dans les formulaires.
 3. Service d'alertes (`alerteService` + `alerteJob` node-cron) pour DPE/diagnostics.
-4. Migration de données : rattacher les `properties` MRE existantes à un immeuble.
+4. Migration de données : rattacher les `properties` IP existantes à un immeuble.

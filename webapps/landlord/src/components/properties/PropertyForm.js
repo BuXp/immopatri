@@ -5,7 +5,7 @@ import {
   SelectField,
   SubmitButton,
   TextField
-} from '@microrealestate/commonui/components';
+} from '@immopatri/commonui/components';
 import { Form, Formik } from 'formik';
 import { fetchImmeubles, QueryKeys } from '../../utils/restcalls';
 import { useContext, useMemo } from 'react';

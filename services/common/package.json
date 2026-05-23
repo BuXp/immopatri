@@ -1,7 +1,7 @@
 {
-  "name": "@microrealestate/common",
+  "name": "@immopatri/common",
   "version": "1.0.0",
-  "description": "Common modules required by the MicroRealEstate services'",
+  "description": "Common modules required by the ImmoPatri services'",
   "author": "Camel Aissani",
   "license": "MIT",
   "type": "module",
@@ -36,7 +36,7 @@
     "winston": "3.13.1"
   },
   "devDependencies": {
-    "@microrealestate/types": "*",
+    "@immopatri/types": "*",
     "@types/bcrypt": "5.0.1",
     "@types/cookie-parser": "1.4.5",
     "@types/express": "4.17.20",

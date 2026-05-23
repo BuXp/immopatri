@@ -1906,11 +1906,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microrealestate/api@workspace:services/api":
+"@immopatri/api@workspace:services/api":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/api@workspace:services/api"
+  resolution: "@immopatri/api@workspace:services/api"
   dependencies:
-    "@microrealestate/common": "*"
+    "@immopatri/common": "*"
     "@typescript-eslint/eslint-plugin": 7.15.0
     "@typescript-eslint/parser": 7.15.0
     axios: 1.8.4
@@ -1933,11 +1933,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/authenticator@workspace:services/authenticator":
+"@immopatri/authenticator@workspace:services/authenticator":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/authenticator@workspace:services/authenticator"
+  resolution: "@immopatri/authenticator@workspace:services/authenticator"
   dependencies:
-    "@microrealestate/common": "*"
+    "@immopatri/common": "*"
     "@typescript-eslint/eslint-plugin": 7.15.0
     "@typescript-eslint/parser": 7.15.0
     axios: 1.8.4
@@ -1955,9 +1955,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/cli@workspace:cli":
+"@immopatri/cli@workspace:cli":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/cli@workspace:cli"
+  resolution: "@immopatri/cli@workspace:cli"
   dependencies:
     chalk: 4.1.2
     clear: 0.1.0
@@ -1977,11 +1977,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/common@*, @microrealestate/common@workspace:services/common":
+"@immopatri/common@*, @immopatri/common@workspace:services/common":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/common@workspace:services/common"
+  resolution: "@immopatri/common@workspace:services/common"
   dependencies:
-    "@microrealestate/types": "*"
+    "@immopatri/types": "*"
     "@types/bcrypt": 5.0.1
     "@types/cookie-parser": 1.4.5
     "@types/express": 4.17.20
@@ -2012,9 +2012,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/commonui@*, @microrealestate/commonui@workspace:webapps/commonui":
+"@immopatri/commonui@*, @immopatri/commonui@workspace:webapps/commonui":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/commonui@workspace:webapps/commonui"
+  resolution: "@immopatri/commonui@workspace:webapps/commonui"
   dependencies:
     "@babel/core": 7.21.3
     "@material-ui/core": 4.12.4
@@ -2037,9 +2037,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/e2e@workspace:e2e":
+"@immopatri/e2e@workspace:e2e":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/e2e@workspace:e2e"
+  resolution: "@immopatri/e2e@workspace:e2e"
   dependencies:
     cypress: 14.4.1
     dotenv: 16.0.1
@@ -2053,11 +2053,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/emailer@workspace:services/emailer":
+"@immopatri/emailer@workspace:services/emailer":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/emailer@workspace:services/emailer"
+  resolution: "@immopatri/emailer@workspace:services/emailer"
   dependencies:
-    "@microrealestate/common": "*"
+    "@immopatri/common": "*"
     "@typescript-eslint/eslint-plugin": 7.15.0
     "@typescript-eslint/parser": 7.15.0
     axios: 1.8.4
@@ -2078,12 +2078,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/gateway@workspace:services/gateway":
+"@immopatri/gateway@workspace:services/gateway":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/gateway@workspace:services/gateway"
+  resolution: "@immopatri/gateway@workspace:services/gateway"
   dependencies:
-    "@microrealestate/common": "*"
-    "@microrealestate/types": "*"
+    "@immopatri/common": "*"
+    "@immopatri/types": "*"
     "@types/cors": 2.8.15
     axios: 1.8.4
     cors: 2.8.5
@@ -2098,16 +2098,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/landlord@workspace:webapps/landlord":
+"@immopatri/landlord@workspace:webapps/landlord":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/landlord@workspace:webapps/landlord"
+  resolution: "@immopatri/landlord@workspace:webapps/landlord"
   dependencies:
     "@babel/core": 7.21.3
     "@date-io/core": 1.3.13
     "@date-io/moment": 1.3.13
     "@material-ui/core": 4.12.4
     "@material-ui/pickers": 3.3.10
-    "@microrealestate/commonui": "*"
+    "@immopatri/commonui": "*"
     "@radix-ui/react-avatar": 1.1.1
     "@radix-ui/react-checkbox": 1.1.2
     "@radix-ui/react-collapsible": 1.1.1
@@ -2188,11 +2188,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/pdfgenerator@workspace:services/pdfgenerator":
+"@immopatri/pdfgenerator@workspace:services/pdfgenerator":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/pdfgenerator@workspace:services/pdfgenerator"
+  resolution: "@immopatri/pdfgenerator@workspace:services/pdfgenerator"
   dependencies:
-    "@microrealestate/common": "*"
+    "@immopatri/common": "*"
     "@typescript-eslint/eslint-plugin": 7.15.0
     "@typescript-eslint/parser": 7.15.0
     async-mutex: 0.5.0
@@ -2218,12 +2218,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/resetservice@workspace:services/resetservice":
+"@immopatri/resetservice@workspace:services/resetservice":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/resetservice@workspace:services/resetservice"
+  resolution: "@immopatri/resetservice@workspace:services/resetservice"
   dependencies:
-    "@microrealestate/common": "*"
-    "@microrealestate/types": "*"
+    "@immopatri/common": "*"
+    "@immopatri/types": "*"
     "@typescript-eslint/eslint-plugin": 7.15.0
     "@typescript-eslint/parser": 7.15.0
     eslint: 8.57.0
@@ -2236,13 +2236,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/tenant@workspace:webapps/tenant":
+"@immopatri/tenant@workspace:webapps/tenant":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/tenant@workspace:webapps/tenant"
+  resolution: "@immopatri/tenant@workspace:webapps/tenant"
   dependencies:
     "@formatjs/intl-localematcher": 0.4.2
     "@hookform/resolvers": 3.3.2
-    "@microrealestate/types": "*"
+    "@immopatri/types": "*"
     "@radix-ui/react-avatar": 1.1.3
     "@radix-ui/react-dialog": 1.1.6
     "@radix-ui/react-hover-card": 1.1.6
@@ -2293,12 +2293,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/tenantapi@workspace:services/tenantapi":
+"@immopatri/tenantapi@workspace:services/tenantapi":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/tenantapi@workspace:services/tenantapi"
+  resolution: "@immopatri/tenantapi@workspace:services/tenantapi"
   dependencies:
-    "@microrealestate/common": "*"
-    "@microrealestate/types": "*"
+    "@immopatri/common": "*"
+    "@immopatri/types": "*"
     "@typescript-eslint/eslint-plugin": 7.15.0
     "@typescript-eslint/parser": 7.15.0
     eslint: 8.57.0
@@ -2312,9 +2312,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microrealestate/types@*, @microrealestate/types@workspace:types":
+"@immopatri/types@*, @immopatri/types@workspace:types":
   version: 0.0.0-use.local
-  resolution: "@microrealestate/types@workspace:types"
+  resolution: "@immopatri/types@workspace:types"
   dependencies:
     "@types/express": 4.17.20
     "@typescript-eslint/eslint-plugin": 7.15.0
@@ -12671,9 +12671,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"microrealestate@workspace:.":
+"immopatri@workspace:.":
   version: 0.0.0-use.local
-  resolution: "microrealestate@workspace:."
+  resolution: "immopatri@workspace:."
   dependencies:
     cross-env: 7.0.3
     husky: 9.1.7

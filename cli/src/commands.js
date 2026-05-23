@@ -29,7 +29,7 @@ function initDirectories() {
 function displayHeader() {
   clear();
   console.log(
-    figlet.textSync('MicroRealEstate', {
+    figlet.textSync('ImmoPatri', {
       horizontalLayout: 'fitted'
     })
   );
@@ -793,7 +793,7 @@ SMTP_PASSWORD=${smtpPassword}
 ###############################################################################
 ##                                                                           ##
 ##  The environment variables below overwrite the ones in the base.env file. ##
-##  The MRE application uses the merge of the base.env and .env files.       ##
+##  The IP application uses the merge of the base.env and .env files.       ##
 ##                                                                           ##
 ##  /!\\ The secrets and tokens have to be backed up otherwise you will not   ##
 ##  be able to log in to the application, to access data from third-parties  ##

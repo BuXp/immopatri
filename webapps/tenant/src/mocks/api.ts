@@ -2,7 +2,7 @@ import {
   PaymentMethod,
   PaymentStatus,
   TenantAPI
-} from '@microrealestate/types';
+} from '@immopatri/types';
 import moment from 'moment';
 
 export const getAllTenants: {

@@ -3,7 +3,7 @@
 ## Objectif
 
 Implémenter la hiérarchie patrimoniale à 3 niveaux (Site > Immeuble > Lot) qui
-manque dans MRE (2 niveaux), cœur métier du projet (DAT 2.3 → 2.5, 3.5).
+manque dans IP (2 niveaux), cœur métier du projet (DAT 2.3 → 2.5, 3.5).
 
 ## Livrables
 
