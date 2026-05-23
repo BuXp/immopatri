@@ -5,6 +5,8 @@ export const QueryKeys = {
   DASHBOARD: 'dashboard',
   ORGANIZATIONS: 'organizations',
   PROPERTIES: 'properties',
+  SITES: 'sites',
+  IMMEUBLES: 'immeubles',
   TENANTS: 'tenants',
   RENTS: 'rents',
   LEASES: 'leases'
@@ -40,6 +42,17 @@ export async function createAppCredentials({ organization, expiryDate }) {
 
 export async function fetchProperties(store) {
   const response = await store.property.fetch();
+  return response.data;
+}
+
+// ── ImmoPatri: hierarchie patrimoniale (DAT Sprint 1) ──
+export async function fetchSites(store) {
+  const response = await store.site.fetch();
+  return response.data;
+}
+
+export async function fetchImmeubles(store, siteId) {
+  const response = await store.immeuble.fetch(siteId);
   return response.data;
 }
 

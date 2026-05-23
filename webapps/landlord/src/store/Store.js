@@ -5,11 +5,13 @@ import Accounting from './Accounting';
 import AppHistory from './AppHistory';
 import Dashboard from './Dashboard';
 import Document from './Document';
+import Immeuble from './Immeuble';
 import Lease from './Lease';
 import moment from 'moment';
 import Organization from './Organization';
 import Property from './Property';
 import Rent from './Rent';
+import Site from './Site';
 import Template from './Template';
 import Tenant from './Tenant';
 import User from './User';
@@ -23,6 +25,8 @@ export default class Store {
     this.rent = new Rent();
     this.tenant = new Tenant();
     this.property = new Property();
+    this.site = new Site();
+    this.immeuble = new Immeuble();
     this.template = new Template();
     this.document = new Document();
     this.dashboard = new Dashboard();
@@ -35,6 +39,8 @@ export default class Store {
       rent: observable,
       tenant: observable,
       property: observable,
+      site: observable,
+      immeuble: observable,
       template: observable,
       document: observable,
       dashboard: observable,
@@ -63,6 +69,12 @@ export default class Store {
         items: []
       },
       property = {
+        items: []
+      },
+      site = {
+        items: []
+      },
+      immeuble = {
         items: []
       },
       template = {
@@ -119,6 +131,12 @@ export default class Store {
     this.property.items = property.items;
     this.property.selected = property.selected;
     this.property.filters = property.filters;
+
+    this.site.items = site.items;
+    this.site.selected = site.selected;
+
+    this.immeuble.items = immeuble.items;
+    this.immeuble.selected = immeuble.selected;
 
     this.template.items = template.items;
     this.template.selected = template.selected;
