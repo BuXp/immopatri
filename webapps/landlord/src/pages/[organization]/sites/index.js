@@ -19,6 +19,7 @@ import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
 import { LuBuilding2, LuPlusCircle } from 'react-icons/lu';
+import MultiProprietaireSelector from '../../../components/proprietaires/MultiProprietaireSelector';
 import Page from '../../../components/Page';
 import { StoreContext } from '../../../store';
 import { Textarea } from '../../../components/ui/textarea';
@@ -39,9 +40,15 @@ const EMPTY_FORM = {
 function NewSiteDialog({ open, setOpen, onCreated }) {
   const store = useContext(StoreContext);
   const [form, setForm] = useState(EMPTY_FORM);
+  const [proprietaires, setProprietaires] = useState([]);
   const [saving, setSaving] = useState(false);
   const set = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
+
+  const reset = () => {
+    setForm(EMPTY_FORM);
+    setProprietaires([]);
+  };
 
   const handleSubmit = async () => {
     if (!form.nom.trim()) {
@@ -51,7 +58,8 @@ function NewSiteDialog({ open, setOpen, onCreated }) {
     setSaving(true);
     const payload = {
       ...form,
-      taxeFonciere: form.taxeFonciere ? Number(form.taxeFonciere) : undefined
+      taxeFonciere: form.taxeFonciere ? Number(form.taxeFonciere) : undefined,
+      proprietaires
     };
     const { status, data } = await store.site.create(payload);
     setSaving(false);
@@ -60,7 +68,7 @@ function NewSiteDialog({ open, setOpen, onCreated }) {
       return;
     }
     toast.success('Site créé');
-    setForm(EMPTY_FORM);
+    reset();
     setOpen(false);
     onCreated?.(data);
   };
@@ -117,6 +125,10 @@ function NewSiteDialog({ open, setOpen, onCreated }) {
               />
             </div>
           </div>
+          <MultiProprietaireSelector
+            value={proprietaires}
+            onChange={setProprietaires}
+          />
           <div className="grid gap-1.5">
             <Label htmlFor="site-notes">Notes</Label>
             <Textarea

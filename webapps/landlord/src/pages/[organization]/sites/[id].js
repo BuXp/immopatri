@@ -20,6 +20,7 @@ import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
 import Link from 'next/link';
 import { LuBuilding, LuChevronRight, LuPlusCircle } from 'react-icons/lu';
+import MultiProprietaireSelector from '../../../components/proprietaires/MultiProprietaireSelector';
 import Page from '../../../components/Page';
 import { StoreContext } from '../../../store';
 import { toast } from 'sonner';
@@ -41,9 +42,15 @@ const EMPTY_FORM = { nom: '', adresse: '', type: '', modeDetention: '' };
 function NewImmeubleDialog({ open, setOpen, siteId, onCreated }) {
   const store = useContext(StoreContext);
   const [form, setForm] = useState(EMPTY_FORM);
+  const [proprietaires, setProprietaires] = useState([]);
   const [saving, setSaving] = useState(false);
   const set = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
+
+  const reset = () => {
+    setForm(EMPTY_FORM);
+    setProprietaires([]);
+  };
 
   const handleSubmit = async () => {
     if (!form.nom.trim()) {
@@ -56,6 +63,7 @@ function NewImmeubleDialog({ open, setOpen, siteId, onCreated }) {
       adresse: form.adresse,
       type: form.type,
       siteId,
+      proprietaires,
       modeDetention: form.modeDetention
         ? { type: form.modeDetention }
         : undefined
@@ -67,7 +75,7 @@ function NewImmeubleDialog({ open, setOpen, siteId, onCreated }) {
       return;
     }
     toast.success('Immeuble créé');
-    setForm(EMPTY_FORM);
+    reset();
     setOpen(false);
     onCreated?.(data);
   };
@@ -113,6 +121,10 @@ function NewImmeubleDialog({ open, setOpen, siteId, onCreated }) {
               </select>
             </div>
           </div>
+          <MultiProprietaireSelector
+            value={proprietaires}
+            onChange={setProprietaires}
+          />
         </div>
         <DialogFooter>
           <Button
