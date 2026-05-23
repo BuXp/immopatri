@@ -7,12 +7,17 @@ import {
   TextField
 } from '@microrealestate/commonui/components';
 import { Form, Formik } from 'formik';
+import { fetchImmeubles, QueryKeys } from '../../utils/restcalls';
 import { useContext, useMemo } from 'react';
+import { Label } from '../ui/label';
+import MultiProprietaireSelector from '../proprietaires/MultiProprietaireSelector';
 import { observer } from 'mobx-react-lite';
 import PropertyIcon from './PropertyIcon';
 import { Section } from '../formfields/Section';
 import { StoreContext } from '../../store';
+import { toJS } from 'mobx';
 import types from './types';
+import { useQuery } from '@tanstack/react-query';
 import useTranslation from 'next-translate/useTranslation';
 
 const validationSchema = Yup.object().shape({
@@ -36,6 +41,11 @@ const PropertyForm = observer(({ onSubmit }) => {
   const { t } = useTranslation('common');
   const store = useContext(StoreContext);
 
+  const { data: immeubles } = useQuery({
+    queryKey: [QueryKeys.IMMEUBLES],
+    queryFn: () => fetchImmeubles(store)
+  });
+
   const initialValues = useMemo(
     () => ({
       type: store.property.selected?.type || '',
@@ -52,7 +62,14 @@ const PropertyForm = observer(({ onSubmit }) => {
         state: '',
         country: ''
       },
-      rent: store.property.selected?.price || ''
+      rent: store.property.selected?.price || '',
+      immeubleId: store.property.selected?.immeubleId || '',
+      proprietaires: toJS(store.property.selected?.proprietaires || []).map(
+        (link) => ({
+          proprietaireId: link.proprietaireId,
+          pourcentage: link.pourcentage
+        })
+      )
     }),
     [store.property.selected]
   );
@@ -74,7 +91,7 @@ const PropertyForm = observer(({ onSubmit }) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ values, isSubmitting }) => {
+      {({ values, isSubmitting, setFieldValue }) => {
         return (
           <Form autoComplete="off">
             <Section label={t('Property information')}>
@@ -105,6 +122,30 @@ const PropertyForm = observer(({ onSubmit }) => {
             </Section>
             <Section label={t('Address')}>
               <AddressField />
+            </Section>
+            <Section label="Rattachement patrimonial">
+              <div className="grid gap-1.5">
+                <Label htmlFor="lot-immeuble">Immeuble</Label>
+                <select
+                  id="lot-immeuble"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  value={values.immeubleId}
+                  onChange={(event) =>
+                    setFieldValue('immeubleId', event.target.value)
+                  }
+                >
+                  <option value="">—</option>
+                  {(immeubles || []).map((immeuble) => (
+                    <option key={immeuble._id} value={immeuble._id}>
+                      {immeuble.nom}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <MultiProprietaireSelector
+                value={values.proprietaires}
+                onChange={(next) => setFieldValue('proprietaires', next)}
+              />
             </Section>
             <Section label={t('Rent')}>
               <NumberField

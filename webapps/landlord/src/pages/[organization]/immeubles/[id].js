@@ -6,20 +6,24 @@ import {
   CardTitle
 } from '../../../components/ui/card';
 import { fetchProperties, QueryKeys } from '../../../utils/restcalls';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge } from '../../../components/ui/badge';
+import { Button } from '../../../components/ui/button';
+import ImmeubleFormDialog from '../../../components/immeubles/ImmeubleFormDialog';
 import Link from 'next/link';
-import { LuChevronRight, LuDoorOpen } from 'react-icons/lu';
+import { LuChevronRight, LuDoorOpen, LuPencil } from 'react-icons/lu';
 import Page from '../../../components/Page';
 import { StoreContext } from '../../../store';
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { withAuthentication } from '../../../components/Authentication';
 
 function ImmeubleDetail() {
   const store = useContext(StoreContext);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { organization, id } = router.query;
+  const [openEdit, setOpenEdit] = useState(false);
 
   const immeubleQuery = useQuery({
     queryKey: [QueryKeys.IMMEUBLES, id],
@@ -66,8 +70,21 @@ function ImmeubleDetail() {
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>{immeuble.nom}</CardTitle>
-          <CardDescription>{immeuble.adresse}</CardDescription>
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle>{immeuble.nom}</CardTitle>
+              <CardDescription>{immeuble.adresse}</CardDescription>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-2"
+              onClick={() => setOpenEdit(true)}
+            >
+              <LuPencil className="size-4" />
+              Modifier
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="text-sm text-muted-foreground grid grid-cols-2 gap-2">
           <div>Type : {immeuble.type || '—'}</div>
@@ -80,8 +97,8 @@ function ImmeubleDetail() {
       <h2 className="text-xl font-semibold mb-3">Lots ({lots.length})</h2>
       {lots.length === 0 ? (
         <p className="text-muted-foreground">
-          Aucun lot rattaché à cet immeuble. Rattachez un bien via son champ
-          immeubleId.
+          Aucun lot rattaché à cet immeuble. Rattachez un bien via le champ
+          Immeuble de sa fiche.
         </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -116,6 +133,18 @@ function ImmeubleDetail() {
           ))}
         </div>
       )}
+
+      <ImmeubleFormDialog
+        open={openEdit}
+        setOpen={setOpenEdit}
+        siteId={immeuble.siteId}
+        immeuble={immeuble}
+        onSaved={() =>
+          queryClient.invalidateQueries({
+            queryKey: [QueryKeys.IMMEUBLES, id]
+          })
+        }
+      />
     </Page>
   );
 }

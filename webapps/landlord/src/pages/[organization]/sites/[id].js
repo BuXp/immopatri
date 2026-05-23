@@ -5,150 +5,31 @@ import {
   CardHeader,
   CardTitle
 } from '../../../components/ui/card';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from '../../../components/ui/dialog';
 import { fetchImmeubles, QueryKeys } from '../../../utils/restcalls';
 import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/input';
-import { Label } from '../../../components/ui/label';
+import ImmeubleFormDialog from '../../../components/immeubles/ImmeubleFormDialog';
 import Link from 'next/link';
-import { LuBuilding, LuChevronRight, LuPlusCircle } from 'react-icons/lu';
-import MultiProprietaireSelector from '../../../components/proprietaires/MultiProprietaireSelector';
+import {
+  LuBuilding,
+  LuChevronRight,
+  LuPencil,
+  LuPlusCircle
+} from 'react-icons/lu';
 import Page from '../../../components/Page';
+import SiteFormDialog from '../../../components/sites/SiteFormDialog';
 import { StoreContext } from '../../../store';
-import { toast } from 'sonner';
 import { useRouter } from 'next/router';
 import { withAuthentication } from '../../../components/Authentication';
-
-const MODES = [
-  'monopropriete',
-  'copropriete',
-  'indivision',
-  'sci',
-  'sas',
-  'sarl',
-  'autre'
-];
-
-const EMPTY_FORM = { nom: '', adresse: '', type: '', modeDetention: '' };
-
-function NewImmeubleDialog({ open, setOpen, siteId, onCreated }) {
-  const store = useContext(StoreContext);
-  const [form, setForm] = useState(EMPTY_FORM);
-  const [proprietaires, setProprietaires] = useState([]);
-  const [saving, setSaving] = useState(false);
-  const set = (key) => (event) =>
-    setForm((prev) => ({ ...prev, [key]: event.target.value }));
-
-  const reset = () => {
-    setForm(EMPTY_FORM);
-    setProprietaires([]);
-  };
-
-  const handleSubmit = async () => {
-    if (!form.nom.trim()) {
-      toast.error("Le nom de l'immeuble est obligatoire");
-      return;
-    }
-    setSaving(true);
-    const payload = {
-      nom: form.nom,
-      adresse: form.adresse,
-      type: form.type,
-      siteId,
-      proprietaires,
-      modeDetention: form.modeDetention
-        ? { type: form.modeDetention }
-        : undefined
-    };
-    const { status, data } = await store.immeuble.create(payload);
-    setSaving(false);
-    if (status !== 200) {
-      toast.error("Erreur lors de la création de l'immeuble");
-      return;
-    }
-    toast.success('Immeuble créé');
-    reset();
-    setOpen(false);
-    onCreated?.(data);
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Nouvel immeuble</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-3">
-          <div className="grid gap-1.5">
-            <Label htmlFor="imm-nom">Nom / numéro *</Label>
-            <Input id="imm-nom" value={form.nom} onChange={set('nom')} />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="imm-adresse">Adresse</Label>
-            <Input
-              id="imm-adresse"
-              value={form.adresse}
-              onChange={set('adresse')}
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="grid gap-1.5">
-              <Label htmlFor="imm-type">Type</Label>
-              <Input id="imm-type" value={form.type} onChange={set('type')} />
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="imm-mode">Mode de détention</Label>
-              <select
-                id="imm-mode"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                value={form.modeDetention}
-                onChange={set('modeDetention')}
-              >
-                <option value="">—</option>
-                {MODES.map((mode) => (
-                  <option key={mode} value={mode}>
-                    {mode}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <MultiProprietaireSelector
-            value={proprietaires}
-            onChange={setProprietaires}
-          />
-        </div>
-        <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={saving}
-          >
-            Annuler
-          </Button>
-          <Button onClick={handleSubmit} disabled={saving}>
-            Créer
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
 
 function SiteDetail() {
   const store = useContext(StoreContext);
   const router = useRouter();
   const queryClient = useQueryClient();
   const { organization, id } = router.query;
-  const [open, setOpen] = useState(false);
+  const [openImmeuble, setOpenImmeuble] = useState(false);
+  const [openEditSite, setOpenEditSite] = useState(false);
 
   const siteQuery = useQuery({
     queryKey: [QueryKeys.SITES, id],
@@ -171,7 +52,7 @@ function SiteDetail() {
       dataCy="siteDetailPage"
       ActionBar={
         <div className="flex justify-end p-2 md:p-0">
-          <Button className="gap-2" onClick={() => setOpen(true)}>
+          <Button className="gap-2" onClick={() => setOpenImmeuble(true)}>
             <LuPlusCircle className="size-4" />
             Ajouter un immeuble
           </Button>
@@ -188,12 +69,25 @@ function SiteDetail() {
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>{site.nom}</CardTitle>
-          <CardDescription>
-            {[site.adresse, site.codePostal, site.ville]
-              .filter(Boolean)
-              .join(', ')}
-          </CardDescription>
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle>{site.nom}</CardTitle>
+              <CardDescription>
+                {[site.adresse, site.codePostal, site.ville]
+                  .filter(Boolean)
+                  .join(', ')}
+              </CardDescription>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-2"
+              onClick={() => setOpenEditSite(true)}
+            >
+              <LuPencil className="size-4" />
+              Modifier
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="text-sm text-muted-foreground grid grid-cols-2 gap-2">
           <div>Banque : {site.banquePrincipale || '—'}</div>
@@ -236,14 +130,22 @@ function SiteDetail() {
         </div>
       )}
 
-      <NewImmeubleDialog
-        open={open}
-        setOpen={setOpen}
+      <ImmeubleFormDialog
+        open={openImmeuble}
+        setOpen={setOpenImmeuble}
         siteId={id}
-        onCreated={() =>
+        onSaved={() =>
           queryClient.invalidateQueries({
             queryKey: [QueryKeys.IMMEUBLES, id]
           })
+        }
+      />
+      <SiteFormDialog
+        open={openEditSite}
+        setOpen={setOpenEditSite}
+        site={site}
+        onSaved={() =>
+          queryClient.invalidateQueries({ queryKey: [QueryKeys.SITES, id] })
         }
       />
     </Page>
