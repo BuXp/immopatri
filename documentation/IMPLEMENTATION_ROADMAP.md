@@ -30,9 +30,9 @@ server-side exigé au DAT 3.6.
 | Sprint | Périmètre DAT | État |
 | --- | --- | --- |
 | 0 | Fondations DevSecOps (CI/CD, backup, provision, Nginx, MinIO/Kuma) | ✅ Fichiers livrés (pipeline en `workflow_dispatch`) |
-| 1 | Hiérarchie Sites > Immeubles > Lots (modèles + API CRUD) | ✅ Backend livré — ui Next.js à venir |
-| 2 | Propriétaires multiples (modèle + API + patrimoine) | ✅ Backend livré — ui & upload MinIO à venir |
-| 3 | DPE & Diagnostics + alertes (cron, email) | 🟡 Schéma préparé (champs `dpe`/`diagnostics` sur le lot) — service/cron à venir |
+| 1 | Hiérarchie Sites > Immeubles > Lots (modèles + API CRUD) | ✅ Backend + UI (pages, breadcrumb, édition) |
+| 2 | Propriétaires multiples (modèle + API + patrimoine) | ✅ Backend + UI (liste, fiche 4 onglets, MultiProprietaireSelector) |
+| 3 | DPE & Diagnostics + alertes | ✅ Service de détection + API alertes + page Conformité (cron node-cron optionnel ; email à venir) |
 | 4 | Copropriété & modes de détention | 🟡 Schéma préparé (`modeDetention`, `appelsCharges`) — routes/import à venir |
 | 5 | Exports PDF/Excel & quittances | ⬛ À faire (service `pdfgenerator` existant à étendre) |
 | 6 | Rapprochement bancaire CSV | ⬛ À faire |
