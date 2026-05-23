@@ -5,6 +5,7 @@ import {
   LuMenu,
   LuSettings,
   LuUserCircle,
+  LuUsers,
   LuWallet
 } from 'react-icons/lu';
 import {
@@ -58,6 +59,13 @@ const menuItems = [
     pathname: '/sites',
     Icon: LuBuilding2,
     dataCy: 'sitesNav'
+  },
+  {
+    key: 'proprietaires',
+    labelId: 'Owners',
+    pathname: '/proprietaires',
+    Icon: LuUsers,
+    dataCy: 'proprietairesNav'
   },
   {
     key: 'properties',

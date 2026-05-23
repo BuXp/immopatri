@@ -7,6 +7,7 @@ export const QueryKeys = {
   PROPERTIES: 'properties',
   SITES: 'sites',
   IMMEUBLES: 'immeubles',
+  PROPRIETAIRES: 'proprietaires',
   TENANTS: 'tenants',
   RENTS: 'rents',
   LEASES: 'leases'
@@ -53,6 +54,17 @@ export async function fetchSites(store) {
 
 export async function fetchImmeubles(store, siteId) {
   const response = await store.immeuble.fetch(siteId);
+  return response.data;
+}
+
+// ── ImmoPatri: proprietaires multiples (DAT Sprint 2) ──
+export async function fetchProprietaires(store) {
+  const response = await store.proprietaire.fetch();
+  return response.data;
+}
+
+export async function fetchProprietairePatrimoine(store, proprietaireId) {
+  const response = await store.proprietaire.patrimoine(proprietaireId);
   return response.data;
 }
 

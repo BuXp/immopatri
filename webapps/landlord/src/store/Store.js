@@ -10,6 +10,7 @@ import Lease from './Lease';
 import moment from 'moment';
 import Organization from './Organization';
 import Property from './Property';
+import Proprietaire from './Proprietaire';
 import Rent from './Rent';
 import Site from './Site';
 import Template from './Template';
@@ -27,6 +28,7 @@ export default class Store {
     this.property = new Property();
     this.site = new Site();
     this.immeuble = new Immeuble();
+    this.proprietaire = new Proprietaire();
     this.template = new Template();
     this.document = new Document();
     this.dashboard = new Dashboard();
@@ -41,6 +43,7 @@ export default class Store {
       property: observable,
       site: observable,
       immeuble: observable,
+      proprietaire: observable,
       template: observable,
       document: observable,
       dashboard: observable,
@@ -75,6 +78,9 @@ export default class Store {
         items: []
       },
       immeuble = {
+        items: []
+      },
+      proprietaire = {
         items: []
       },
       template = {
@@ -137,6 +143,9 @@ export default class Store {
 
     this.immeuble.items = immeuble.items;
     this.immeuble.selected = immeuble.selected;
+
+    this.proprietaire.items = proprietaire.items;
+    this.proprietaire.selected = proprietaire.selected;
 
     this.template.items = template.items;
     this.template.selected = template.selected;
