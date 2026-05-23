@@ -1,4 +1,5 @@
 import * as accountingManager from './managers/accountingmanager.js';
+import * as alerteManager from './managers/alertemanager.js';
 import * as dashboardManager from './managers/dashboardmanager.js';
 import * as emailManager from './managers/emailmanager.js';
 import * as immeubleManager from './managers/immeublemanager.js';
@@ -134,6 +135,16 @@ export default function routes() {
     Middlewares.asyncWrapper(proprietaireManager.remove)
   );
   router.use('/proprietaires', proprietairesRouter);
+
+  // ── ImmoPatri: alertes de conformité DPE & diagnostics (DAT Sprint 3) ──
+  const alertesRouter = express.Router();
+  alertesRouter.get('/', Middlewares.asyncWrapper(alerteManager.all));
+  alertesRouter.post('/scan', Middlewares.asyncWrapper(alerteManager.scan));
+  alertesRouter.patch(
+    '/:id/acquittement',
+    Middlewares.asyncWrapper(alerteManager.acknowledge)
+  );
+  router.use('/alertes', alertesRouter);
 
   router.get(
     '/accounting/:year',

@@ -2,6 +2,7 @@ import { makeObservable, observable } from 'mobx';
 import { setAccessToken, setOrganizationId } from '../utils/fetch';
 
 import Accounting from './Accounting';
+import Alerte from './Alerte';
 import AppHistory from './AppHistory';
 import Dashboard from './Dashboard';
 import Document from './Document';
@@ -29,6 +30,7 @@ export default class Store {
     this.site = new Site();
     this.immeuble = new Immeuble();
     this.proprietaire = new Proprietaire();
+    this.alerte = new Alerte();
     this.template = new Template();
     this.document = new Document();
     this.dashboard = new Dashboard();
@@ -44,6 +46,7 @@ export default class Store {
       site: observable,
       immeuble: observable,
       proprietaire: observable,
+      alerte: observable,
       template: observable,
       document: observable,
       dashboard: observable,
@@ -81,6 +84,9 @@ export default class Store {
         items: []
       },
       proprietaire = {
+        items: []
+      },
+      alerte = {
         items: []
       },
       template = {
@@ -146,6 +152,8 @@ export default class Store {
 
     this.proprietaire.items = proprietaire.items;
     this.proprietaire.selected = proprietaire.selected;
+
+    this.alerte.items = alerte.items;
 
     this.template.items = template.items;
     this.template.selected = template.selected;

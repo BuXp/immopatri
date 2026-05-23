@@ -8,6 +8,7 @@ export const QueryKeys = {
   SITES: 'sites',
   IMMEUBLES: 'immeubles',
   PROPRIETAIRES: 'proprietaires',
+  ALERTES: 'alertes',
   TENANTS: 'tenants',
   RENTS: 'rents',
   LEASES: 'leases'
@@ -65,6 +66,17 @@ export async function fetchProprietaires(store) {
 
 export async function fetchProprietairePatrimoine(store, proprietaireId) {
   const response = await store.proprietaire.patrimoine(proprietaireId);
+  return response.data;
+}
+
+// ── ImmoPatri: alertes de conformité DPE & diagnostics (DAT Sprint 3) ──
+export async function fetchAlertes(store, filters) {
+  const response = await store.alerte.fetch(filters);
+  return response.data;
+}
+
+export async function scanAlertes(store) {
+  const response = await store.alerte.scan();
   return response.data;
 }
 

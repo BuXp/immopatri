@@ -290,6 +290,21 @@ export namespace CollectionTypes {
     updatedAt?: Date;
   };
 
+  export type Alerte = {
+    _id: string;
+    realmId: string;
+    lotId?: string;
+    immeubleId?: string;
+    siteId?: string;
+    type: string;
+    niveau: 'orange' | 'rouge';
+    message: string;
+    dateExpiration?: Date;
+    dateAlerte?: Date;
+    envoyeEmail?: boolean;
+    acquittee?: boolean;
+  };
+
   export type Template = {
     _id: string;
     realmId: string;

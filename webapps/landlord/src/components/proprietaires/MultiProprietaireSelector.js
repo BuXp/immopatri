@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
 import { fetchProprietaires, QueryKeys } from '../../utils/restcalls';
+import { LuPlus, LuTrash2 } from 'react-icons/lu';
+import { useContext, useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import { proprietaireDisplayName } from '../../utils/proprietaire';
 import { StoreContext } from '../../store';
 import { useQuery } from '@tanstack/react-query';

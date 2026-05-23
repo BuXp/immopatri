@@ -4,6 +4,7 @@ import {
   LuLayoutDashboard,
   LuMenu,
   LuSettings,
+  LuShieldCheck,
   LuUserCircle,
   LuUsers,
   LuWallet
@@ -73,6 +74,13 @@ const menuItems = [
     pathname: '/properties',
     Icon: LuKeyRound,
     dataCy: 'propertiesNav'
+  },
+  {
+    key: 'conformite',
+    labelId: 'Compliance',
+    pathname: '/conformite',
+    Icon: LuShieldCheck,
+    dataCy: 'conformiteNav'
   },
   {
     key: 'accounting',

@@ -6,10 +6,10 @@ import {
   CardTitle
 } from '../../../components/ui/card';
 import { fetchSites, QueryKeys } from '../../../utils/restcalls';
+import { LuBuilding2, LuPlusCircle } from 'react-icons/lu';
 import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/button';
-import { LuBuilding2, LuPlusCircle } from 'react-icons/lu';
 import Page from '../../../components/Page';
 import SiteFormDialog from '../../../components/sites/SiteFormDialog';
 import { StoreContext } from '../../../store';

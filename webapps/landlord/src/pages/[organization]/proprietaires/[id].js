@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback } from '../../../components/ui/avatar';
 import {
   Card,
   CardContent,
@@ -6,18 +7,23 @@ import {
   CardTitle
 } from '../../../components/ui/card';
 import {
+  fetchProprietairePatrimoine,
+  QueryKeys
+} from '../../../utils/restcalls';
+import {
+  proprietaireDisplayName,
+  proprietaireInitials
+} from '../../../utils/proprietaire';
+import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger
 } from '../../../components/ui/tabs';
-import { fetchProprietairePatrimoine, QueryKeys } from '../../../utils/restcalls';
-import { Avatar, AvatarFallback } from '../../../components/ui/avatar';
 import { Badge } from '../../../components/ui/badge';
 import Link from 'next/link';
 import { LuChevronRight } from 'react-icons/lu';
 import Page from '../../../components/Page';
-import { proprietaireDisplayName, proprietaireInitials } from '../../../utils/proprietaire';
 import { StoreContext } from '../../../store';
 import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -160,7 +166,8 @@ function ProprietaireDetail() {
         <TabsContent value="documents">
           {(proprietaire.documents || []).length === 0 ? (
             <p className="text-muted-foreground">
-              Aucun document. L'upload vers MinIO sera ajouté ultérieurement.
+              Aucun document. L&apos;upload vers MinIO sera ajouté
+              ultérieurement.
             </p>
           ) : (
             <ul className="list-disc pl-6">

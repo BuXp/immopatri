@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export { default as Account } from './account.js';
+export { default as Alerte } from './alerte.js';
 export { default as Document } from './document.js';
 export { default as Email } from './email.js';
 export { default as Immeuble } from './immeuble.js';

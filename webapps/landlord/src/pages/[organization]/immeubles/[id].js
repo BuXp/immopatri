@@ -6,13 +6,13 @@ import {
   CardTitle
 } from '../../../components/ui/card';
 import { fetchProperties, QueryKeys } from '../../../utils/restcalls';
+import { LuChevronRight, LuDoorOpen, LuPencil } from 'react-icons/lu';
 import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge } from '../../../components/ui/badge';
 import { Button } from '../../../components/ui/button';
 import ImmeubleFormDialog from '../../../components/immeubles/ImmeubleFormDialog';
 import Link from 'next/link';
-import { LuChevronRight, LuDoorOpen, LuPencil } from 'react-icons/lu';
 import Page from '../../../components/Page';
 import { StoreContext } from '../../../store';
 import { useRouter } from 'next/router';
