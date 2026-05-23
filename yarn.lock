@@ -1375,6 +1375,429 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@immopatri/api@workspace:services/api":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/api@workspace:services/api"
+  dependencies:
+    "@immopatri/common": "*"
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    axios: 1.8.4
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    i18n: 0.13.3
+    jest: 29.7.0
+    json2csv: 5.0.6
+    jsonwebtoken: 9.0.0
+    lodash: 4.17.21
+    moment: 2.29.4
+    mongobackup: 0.3.5
+    nanoid: 5.1.0
+    nodemon: 3.1.4
+    npm-run-all: 4.1.5
+    rimraf: 6.0.1
+    supertest: 6.1.3
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/authenticator@workspace:services/authenticator":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/authenticator@workspace:services/authenticator"
+  dependencies:
+    "@immopatri/common": "*"
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    axios: 1.8.4
+    bcrypt: 5.1.1
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    jsonwebtoken: 9.0.0
+    locale: 0.1.0
+    nanoid: 5.1.0
+    nodemon: 3.1.4
+    npm-run-all: 4.1.5
+    rimraf: 6.0.1
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/cli@workspace:cli":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/cli@workspace:cli"
+  dependencies:
+    chalk: 4.1.2
+    clear: 0.1.0
+    dotenv: 16.0.1
+    dotenv-expand: 8.0.3
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    figlet: 1.5.2
+    inquirer: 8.2.4
+    jest: 29.7.0
+    minimist: 1.2.6
+    moment: 2.29.4
+    which: 4.0.0
+  bin:
+    cli: src/index.js
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/common@*, @immopatri/common@workspace:services/common":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/common@workspace:services/common"
+  dependencies:
+    "@immopatri/types": "*"
+    "@types/bcrypt": 5.0.1
+    "@types/cookie-parser": 1.4.5
+    "@types/express": 4.17.20
+    "@types/jsonwebtoken": 9.0.4
+    "@types/lodash": 4.17.5
+    "@types/method-override": 0.0.34
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    axios: 1.8.4
+    bcrypt: 5.1.1
+    cookie-parser: 1.4.7
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    express: 4.21.1
+    express-mongo-sanitize: 2.2.0
+    express-winston: 4.2.0
+    jest: 29.7.0
+    jsonwebtoken: 9.0.0
+    lodash: 4.17.21
+    method-override: 3.0.0
+    mongoose: 6.13.6
+    npm-run-all: 4.1.5
+    redis: 4.6.10
+    rimraf: 6.0.1
+    typescript: 5.5.4
+    winston: 3.13.1
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/commonui@*, @immopatri/commonui@workspace:webapps/commonui":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/commonui@workspace:webapps/commonui"
+  dependencies:
+    "@babel/core": 7.21.3
+    "@material-ui/core": 4.12.4
+    "@material-ui/icons": 4.11.3
+    "@material-ui/pickers": 3.3.10
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    eslint-plugin-react: 7.33.2
+    eslint-plugin-react-hooks: 4.6.0
+    formik: 2.2.9
+    moment: 2.29.4
+    next: 14.2.26
+    next-translate: 2.6.2
+    next-translate-plugin: 2.6.2
+    prop-types: 15.8.1
+    react: 18.2.0
+    react-dom: 18.2.0
+    require-from-string: 2.0.2
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/e2e@workspace:e2e":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/e2e@workspace:e2e"
+  dependencies:
+    cypress: 14.4.1
+    dotenv: 16.0.1
+    dotenv-expand: 8.0.3
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-cypress: 2.15.1
+    eslint-plugin-import: 2.29.1
+    i18next: 21.8.14
+    moment: 2.29.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/emailer@workspace:services/emailer":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/emailer@workspace:services/emailer"
+  dependencies:
+    "@immopatri/common": "*"
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    axios: 1.8.4
+    ejs: 3.1.10
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    i18n: 0.14.2
+    jsonwebtoken: 9.0.0
+    locale: 0.1.0
+    moment: 2.29.4
+    nodemailer: 6.9.14
+    nodemailer-mailgun-transport: 2.1.5
+    nodemon: 3.1.4
+    npm-run-all: 4.1.5
+    rimraf: 6.0.1
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/gateway@workspace:services/gateway":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/gateway@workspace:services/gateway"
+  dependencies:
+    "@immopatri/common": "*"
+    "@immopatri/types": "*"
+    "@types/cors": 2.8.15
+    axios: 1.8.4
+    cors: 2.8.5
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    http-proxy-middleware: 2.0.7
+    npm-run-all: 4.1.5
+    rimraf: 6.0.1
+    tsx: 3.14.0
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/landlord@workspace:webapps/landlord":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/landlord@workspace:webapps/landlord"
+  dependencies:
+    "@babel/core": 7.21.3
+    "@date-io/core": 1.3.13
+    "@date-io/moment": 1.3.13
+    "@immopatri/commonui": "*"
+    "@material-ui/core": 4.12.4
+    "@material-ui/pickers": 3.3.10
+    "@radix-ui/react-avatar": 1.1.1
+    "@radix-ui/react-checkbox": 1.1.2
+    "@radix-ui/react-collapsible": 1.1.1
+    "@radix-ui/react-dialog": 1.1.2
+    "@radix-ui/react-label": 2.1.0
+    "@radix-ui/react-popover": 1.1.2
+    "@radix-ui/react-progress": 1.1.0
+    "@radix-ui/react-select": 2.1.2
+    "@radix-ui/react-separator": 1.1.0
+    "@radix-ui/react-slot": 1.1.0
+    "@radix-ui/react-switch": 1.1.1
+    "@radix-ui/react-tabs": 1.1.1
+    "@radix-ui/react-toggle": 1.1.0
+    "@radix-ui/react-toggle-group": 1.1.0
+    "@radix-ui/react-tooltip": 1.1.3
+    "@react-pdf-viewer/core": 3.12.0
+    "@react-pdf-viewer/default-layout": 3.12.0
+    "@react-pdf-viewer/full-screen": 3.12.0
+    "@react-pdf-viewer/print": 3.12.0
+    "@tanstack/react-query": 5.29.0
+    "@tiptap/core": 2.6.6
+    "@tiptap/extension-placeholder": 2.6.6
+    "@tiptap/extension-superscript": 2.6.6
+    "@tiptap/extension-table": 2.6.6
+    "@tiptap/extension-table-cell": 2.6.6
+    "@tiptap/extension-table-header": 2.6.6
+    "@tiptap/extension-table-row": 2.6.6
+    "@tiptap/extension-text-align": 2.6.6
+    "@tiptap/extension-underline": 2.6.6
+    "@tiptap/pm": 2.6.6
+    "@tiptap/react": 2.6.6
+    "@tiptap/starter-kit": 2.6.6
+    "@types/lodash": 4.17.5
+    autoprefixer: 10.4.20
+    axios: 1.8.4
+    babel-loader: 8.2.5
+    class-variance-authority: 0.7.0
+    clsx: 2.1.0
+    currency-codes: 2.1.0
+    currency-symbol-map: 5.1.0
+    date-fns: 3.6.0
+    eslint: 8.57.0
+    eslint-config-next: 14.2.26
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    fdir: 5.2.0
+    formik: 2.2.9
+    jose: 4.15.5
+    js-file-download: 0.4.12
+    jsesc: 3.0.2
+    lodash: 4.17.21
+    material-ui-formik-components: 0.7.3
+    mobx: 6.12.3
+    mobx-react-lite: 3.4.3
+    moment: 2.29.4
+    nanoid: 5.1.0
+    next: 14.2.26
+    next-themes: 0.3.0
+    next-translate: 2.6.2
+    next-translate-plugin: 2.6.2
+    pdfjs-dist: 3.11.174
+    pigeon-maps: 0.21.3
+    postcss: 8.5.3
+    prop-types: 15.8.1
+    react: 18.2.0
+    react-awesome-lightbox: 1.8.1
+    react-day-picker: 8.10.0
+    react-dom: 18.2.0
+    react-icons: 5.3.0
+    recharts: 2.13.3
+    sonner: 1.4.41
+    tailwind-merge: 2.5.2
+    tailwindcss: 3.4.10
+    tailwindcss-animate: 1.0.7
+    usehooks-ts: 3.1.0
+    vaul: 0.9.0
+    yup: 0.32.11
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/pdfgenerator@workspace:services/pdfgenerator":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/pdfgenerator@workspace:services/pdfgenerator"
+  dependencies:
+    "@immopatri/common": "*"
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    async-mutex: 0.5.0
+    aws-sdk: 2.1677.0
+    ejs: 3.1.10
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    file-url: 3.0.0
+    fs-extra: 10.1.0
+    handlebars: 4.7.7
+    i18n: 0.14.2
+    jsonwebtoken: 9.0.0
+    locale: 0.1.0
+    moment: 2.29.4
+    multer: 1.4.5-lts.1
+    nodemon: 3.1.4
+    npm-run-all: 4.1.5
+    puppeteer: 23.2.1
+    rimraf: 6.0.1
+    sanitize-filename: 1.6.3
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/resetservice@workspace:services/resetservice":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/resetservice@workspace:services/resetservice"
+  dependencies:
+    "@immopatri/common": "*"
+    "@immopatri/types": "*"
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    npm-run-all: 4.1.5
+    rimraf: 6.0.1
+    tsx: 3.14.0
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/tenant@workspace:webapps/tenant":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/tenant@workspace:webapps/tenant"
+  dependencies:
+    "@formatjs/intl-localematcher": 0.4.2
+    "@hookform/resolvers": 3.3.2
+    "@immopatri/types": "*"
+    "@radix-ui/react-avatar": 1.1.3
+    "@radix-ui/react-dialog": 1.1.6
+    "@radix-ui/react-hover-card": 1.1.6
+    "@radix-ui/react-label": 2.1.2
+    "@radix-ui/react-popover": 1.1.6
+    "@radix-ui/react-select": 2.1.6
+    "@radix-ui/react-separator": 1.1.2
+    "@radix-ui/react-slot": 1.1.2
+    "@radix-ui/react-toast": 1.2.6
+    "@radix-ui/react-tooltip": 1.1.8
+    "@types/negotiator": 0.6.2
+    "@types/node": 22.13.5
+    "@types/react": 18.2.32
+    "@types/react-dom": 18.2.14
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    autoprefixer: 10.4.20
+    axios: 1.8.4
+    class-variance-authority: 0.7.1
+    clsx: 2.1.1
+    date-fns: 2.30.0
+    eslint: 8.57.0
+    eslint-config-next: 14.2.26
+    eslint-config-prettier: 9.1.0
+    eslint-import-resolver-typescript: 3.6.1
+    eslint-plugin-import: 2.29.1
+    input-otp: 1.4.2
+    js-file-download: 0.4.12
+    lucide-react: 0.475.0
+    moment: 2.30.1
+    negotiator: 0.6.3
+    next: 14.2.26
+    next-runtime-env: 3.2.1
+    npm-run-all: 4.1.5
+    postcss: 8.5.3
+    react: 18.2.0
+    react-day-picker: 8.10.1
+    react-dom: 18.2.0
+    react-hook-form: 7.54.2
+    rimraf: 6.0.1
+    tailwind-merge: 2.5.2
+    tailwindcss: 3.4.10
+    tailwindcss-animate: 1.0.7
+    typescript: 5.7.3
+    usehooks-ts: 3.1.0
+    vaul: 1.1.2
+    zod: 3.24.2
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/tenantapi@workspace:services/tenantapi":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/tenantapi@workspace:services/tenantapi"
+  dependencies:
+    "@immopatri/common": "*"
+    "@immopatri/types": "*"
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-plugin-import: 2.29.1
+    moment: 2.29.4
+    npm-run-all: 4.1.5
+    rimraf: 6.0.1
+    tsx: 3.14.0
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
+"@immopatri/types@*, @immopatri/types@workspace:types":
+  version: 0.0.0-use.local
+  resolution: "@immopatri/types@workspace:types"
+  dependencies:
+    "@types/express": 4.17.20
+    "@typescript-eslint/eslint-plugin": 7.15.0
+    "@typescript-eslint/parser": 7.15.0
+    eslint: 8.57.0
+    eslint-config-prettier: 9.1.0
+    eslint-import-resolver-typescript: 3.6.1
+    eslint-plugin-import: 2.29.1
+    npm-run-all: 4.1.5
+    rimraf: 6.0.1
+    typescript: 5.5.4
+  languageName: unknown
+  linkType: soft
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -1905,429 +2328,6 @@ __metadata:
   checksum: e69c3b0b372e15af88c285f6884ac0e3ba5fc7227b8ddc7f4bef94cb5675057126dc0ae9001e2a623d7ec61727d9b5e69b8e61be8618afe0baf40081ad3b0568
   languageName: node
   linkType: hard
-
-"@immopatri/api@workspace:services/api":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/api@workspace:services/api"
-  dependencies:
-    "@immopatri/common": "*"
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    axios: 1.8.4
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    i18n: 0.13.3
-    jest: 29.7.0
-    json2csv: 5.0.6
-    jsonwebtoken: 9.0.0
-    lodash: 4.17.21
-    moment: 2.29.4
-    mongobackup: 0.3.5
-    nanoid: 5.1.0
-    nodemon: 3.1.4
-    npm-run-all: 4.1.5
-    rimraf: 6.0.1
-    supertest: 6.1.3
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/authenticator@workspace:services/authenticator":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/authenticator@workspace:services/authenticator"
-  dependencies:
-    "@immopatri/common": "*"
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    axios: 1.8.4
-    bcrypt: 5.1.1
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    jsonwebtoken: 9.0.0
-    locale: 0.1.0
-    nanoid: 5.1.0
-    nodemon: 3.1.4
-    npm-run-all: 4.1.5
-    rimraf: 6.0.1
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/cli@workspace:cli":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/cli@workspace:cli"
-  dependencies:
-    chalk: 4.1.2
-    clear: 0.1.0
-    dotenv: 16.0.1
-    dotenv-expand: 8.0.3
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    figlet: 1.5.2
-    inquirer: 8.2.4
-    jest: 29.7.0
-    minimist: 1.2.6
-    moment: 2.29.4
-    which: 4.0.0
-  bin:
-    cli: src/index.js
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/common@*, @immopatri/common@workspace:services/common":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/common@workspace:services/common"
-  dependencies:
-    "@immopatri/types": "*"
-    "@types/bcrypt": 5.0.1
-    "@types/cookie-parser": 1.4.5
-    "@types/express": 4.17.20
-    "@types/jsonwebtoken": 9.0.4
-    "@types/lodash": 4.17.5
-    "@types/method-override": 0.0.34
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    axios: 1.8.4
-    bcrypt: 5.1.1
-    cookie-parser: 1.4.7
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    express: 4.21.1
-    express-mongo-sanitize: 2.2.0
-    express-winston: 4.2.0
-    jest: 29.7.0
-    jsonwebtoken: 9.0.0
-    lodash: 4.17.21
-    method-override: 3.0.0
-    mongoose: 6.13.6
-    npm-run-all: 4.1.5
-    redis: 4.6.10
-    rimraf: 6.0.1
-    typescript: 5.5.4
-    winston: 3.13.1
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/commonui@*, @immopatri/commonui@workspace:webapps/commonui":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/commonui@workspace:webapps/commonui"
-  dependencies:
-    "@babel/core": 7.21.3
-    "@material-ui/core": 4.12.4
-    "@material-ui/icons": 4.11.3
-    "@material-ui/pickers": 3.3.10
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    eslint-plugin-react: 7.33.2
-    eslint-plugin-react-hooks: 4.6.0
-    formik: 2.2.9
-    moment: 2.29.4
-    next: 14.2.26
-    next-translate: 2.6.2
-    next-translate-plugin: 2.6.2
-    prop-types: 15.8.1
-    react: 18.2.0
-    react-dom: 18.2.0
-    require-from-string: 2.0.2
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/e2e@workspace:e2e":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/e2e@workspace:e2e"
-  dependencies:
-    cypress: 14.4.1
-    dotenv: 16.0.1
-    dotenv-expand: 8.0.3
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-cypress: 2.15.1
-    eslint-plugin-import: 2.29.1
-    i18next: 21.8.14
-    moment: 2.29.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/emailer@workspace:services/emailer":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/emailer@workspace:services/emailer"
-  dependencies:
-    "@immopatri/common": "*"
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    axios: 1.8.4
-    ejs: 3.1.10
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    i18n: 0.14.2
-    jsonwebtoken: 9.0.0
-    locale: 0.1.0
-    moment: 2.29.4
-    nodemailer: 6.9.14
-    nodemailer-mailgun-transport: 2.1.5
-    nodemon: 3.1.4
-    npm-run-all: 4.1.5
-    rimraf: 6.0.1
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/gateway@workspace:services/gateway":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/gateway@workspace:services/gateway"
-  dependencies:
-    "@immopatri/common": "*"
-    "@immopatri/types": "*"
-    "@types/cors": 2.8.15
-    axios: 1.8.4
-    cors: 2.8.5
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    http-proxy-middleware: 2.0.7
-    npm-run-all: 4.1.5
-    rimraf: 6.0.1
-    tsx: 3.14.0
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/landlord@workspace:webapps/landlord":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/landlord@workspace:webapps/landlord"
-  dependencies:
-    "@babel/core": 7.21.3
-    "@date-io/core": 1.3.13
-    "@date-io/moment": 1.3.13
-    "@material-ui/core": 4.12.4
-    "@material-ui/pickers": 3.3.10
-    "@immopatri/commonui": "*"
-    "@radix-ui/react-avatar": 1.1.1
-    "@radix-ui/react-checkbox": 1.1.2
-    "@radix-ui/react-collapsible": 1.1.1
-    "@radix-ui/react-dialog": 1.1.2
-    "@radix-ui/react-label": 2.1.0
-    "@radix-ui/react-popover": 1.1.2
-    "@radix-ui/react-progress": 1.1.0
-    "@radix-ui/react-select": 2.1.2
-    "@radix-ui/react-separator": 1.1.0
-    "@radix-ui/react-slot": 1.1.0
-    "@radix-ui/react-switch": 1.1.1
-    "@radix-ui/react-tabs": 1.1.1
-    "@radix-ui/react-toggle": 1.1.0
-    "@radix-ui/react-toggle-group": 1.1.0
-    "@radix-ui/react-tooltip": 1.1.3
-    "@react-pdf-viewer/core": 3.12.0
-    "@react-pdf-viewer/default-layout": 3.12.0
-    "@react-pdf-viewer/full-screen": 3.12.0
-    "@react-pdf-viewer/print": 3.12.0
-    "@tanstack/react-query": 5.29.0
-    "@tiptap/core": 2.6.6
-    "@tiptap/extension-placeholder": 2.6.6
-    "@tiptap/extension-superscript": 2.6.6
-    "@tiptap/extension-table": 2.6.6
-    "@tiptap/extension-table-cell": 2.6.6
-    "@tiptap/extension-table-header": 2.6.6
-    "@tiptap/extension-table-row": 2.6.6
-    "@tiptap/extension-text-align": 2.6.6
-    "@tiptap/extension-underline": 2.6.6
-    "@tiptap/pm": 2.6.6
-    "@tiptap/react": 2.6.6
-    "@tiptap/starter-kit": 2.6.6
-    "@types/lodash": 4.17.5
-    autoprefixer: 10.4.20
-    axios: 1.8.4
-    babel-loader: 8.2.5
-    class-variance-authority: 0.7.0
-    clsx: 2.1.0
-    currency-codes: 2.1.0
-    currency-symbol-map: 5.1.0
-    date-fns: 3.6.0
-    eslint: 8.57.0
-    eslint-config-next: 14.2.26
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    fdir: 5.2.0
-    formik: 2.2.9
-    jose: 4.15.5
-    js-file-download: 0.4.12
-    jsesc: 3.0.2
-    lodash: 4.17.21
-    material-ui-formik-components: 0.7.3
-    mobx: 6.12.3
-    mobx-react-lite: 3.4.3
-    moment: 2.29.4
-    nanoid: 5.1.0
-    next: 14.2.26
-    next-themes: 0.3.0
-    next-translate: 2.6.2
-    next-translate-plugin: 2.6.2
-    pdfjs-dist: 3.11.174
-    pigeon-maps: 0.21.3
-    postcss: 8.5.3
-    prop-types: 15.8.1
-    react: 18.2.0
-    react-awesome-lightbox: 1.8.1
-    react-day-picker: 8.10.0
-    react-dom: 18.2.0
-    react-icons: 5.3.0
-    recharts: 2.13.3
-    sonner: 1.4.41
-    tailwind-merge: 2.5.2
-    tailwindcss: 3.4.10
-    tailwindcss-animate: 1.0.7
-    usehooks-ts: 3.1.0
-    vaul: 0.9.0
-    yup: 0.32.11
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/pdfgenerator@workspace:services/pdfgenerator":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/pdfgenerator@workspace:services/pdfgenerator"
-  dependencies:
-    "@immopatri/common": "*"
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    async-mutex: 0.5.0
-    aws-sdk: 2.1677.0
-    ejs: 3.1.10
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    file-url: 3.0.0
-    fs-extra: 10.1.0
-    handlebars: 4.7.7
-    i18n: 0.14.2
-    jsonwebtoken: 9.0.0
-    locale: 0.1.0
-    moment: 2.29.4
-    multer: 1.4.5-lts.1
-    nodemon: 3.1.4
-    npm-run-all: 4.1.5
-    puppeteer: 23.2.1
-    rimraf: 6.0.1
-    sanitize-filename: 1.6.3
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/resetservice@workspace:services/resetservice":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/resetservice@workspace:services/resetservice"
-  dependencies:
-    "@immopatri/common": "*"
-    "@immopatri/types": "*"
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    npm-run-all: 4.1.5
-    rimraf: 6.0.1
-    tsx: 3.14.0
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/tenant@workspace:webapps/tenant":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/tenant@workspace:webapps/tenant"
-  dependencies:
-    "@formatjs/intl-localematcher": 0.4.2
-    "@hookform/resolvers": 3.3.2
-    "@immopatri/types": "*"
-    "@radix-ui/react-avatar": 1.1.3
-    "@radix-ui/react-dialog": 1.1.6
-    "@radix-ui/react-hover-card": 1.1.6
-    "@radix-ui/react-label": 2.1.2
-    "@radix-ui/react-popover": 1.1.6
-    "@radix-ui/react-select": 2.1.6
-    "@radix-ui/react-separator": 1.1.2
-    "@radix-ui/react-slot": 1.1.2
-    "@radix-ui/react-toast": 1.2.6
-    "@radix-ui/react-tooltip": 1.1.8
-    "@types/negotiator": 0.6.2
-    "@types/node": 22.13.5
-    "@types/react": 18.2.32
-    "@types/react-dom": 18.2.14
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    autoprefixer: 10.4.20
-    axios: 1.8.4
-    class-variance-authority: 0.7.1
-    clsx: 2.1.1
-    date-fns: 2.30.0
-    eslint: 8.57.0
-    eslint-config-next: 14.2.26
-    eslint-config-prettier: 9.1.0
-    eslint-import-resolver-typescript: 3.6.1
-    eslint-plugin-import: 2.29.1
-    input-otp: 1.4.2
-    js-file-download: 0.4.12
-    lucide-react: 0.475.0
-    moment: 2.30.1
-    negotiator: 0.6.3
-    next: 14.2.26
-    next-runtime-env: 3.2.1
-    npm-run-all: 4.1.5
-    postcss: 8.5.3
-    react: 18.2.0
-    react-day-picker: 8.10.1
-    react-dom: 18.2.0
-    react-hook-form: 7.54.2
-    rimraf: 6.0.1
-    tailwind-merge: 2.5.2
-    tailwindcss: 3.4.10
-    tailwindcss-animate: 1.0.7
-    typescript: 5.7.3
-    usehooks-ts: 3.1.0
-    vaul: 1.1.2
-    zod: 3.24.2
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/tenantapi@workspace:services/tenantapi":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/tenantapi@workspace:services/tenantapi"
-  dependencies:
-    "@immopatri/common": "*"
-    "@immopatri/types": "*"
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-plugin-import: 2.29.1
-    moment: 2.29.4
-    npm-run-all: 4.1.5
-    rimraf: 6.0.1
-    tsx: 3.14.0
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
-
-"@immopatri/types@*, @immopatri/types@workspace:types":
-  version: 0.0.0-use.local
-  resolution: "@immopatri/types@workspace:types"
-  dependencies:
-    "@types/express": 4.17.20
-    "@typescript-eslint/eslint-plugin": 7.15.0
-    "@typescript-eslint/parser": 7.15.0
-    eslint: 8.57.0
-    eslint-config-prettier: 9.1.0
-    eslint-import-resolver-typescript: 3.6.1
-    eslint-plugin-import: 2.29.1
-    npm-run-all: 4.1.5
-    rimraf: 6.0.1
-    typescript: 5.5.4
-  languageName: unknown
-  linkType: soft
 
 "@mongodb-js/saslprep@npm:^1.1.0":
   version: 1.1.9
@@ -10634,6 +10634,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immopatri@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "immopatri@workspace:."
+  dependencies:
+    cross-env: 7.0.3
+    husky: 9.1.7
+    lint-staged: 15.4.3
+    prettier: 3.5.2
+  languageName: unknown
+  linkType: soft
+
 "import-fresh@npm:^3.2.1, import-fresh@npm:^3.3.0":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -12670,17 +12681,6 @@ __metadata:
   checksum: 79920eb634e6f400b464a954fcfa589c4e7c7143209488e44baf627f9affc8b1e306f41f4f0deedde97e69cb725920879462d3e750ab3bd3c1aed675bb3a8966
   languageName: node
   linkType: hard
-
-"immopatri@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "immopatri@workspace:."
-  dependencies:
-    cross-env: 7.0.3
-    husky: 9.1.7
-    lint-staged: 15.4.3
-    prettier: 3.5.2
-  languageName: unknown
-  linkType: soft
 
 "mime-db@npm:1.52.0":
   version: 1.52.0
