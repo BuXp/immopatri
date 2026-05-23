@@ -1,4 +1,5 @@
 import {
+  LuBuilding2,
   LuKeyRound,
   LuLayoutDashboard,
   LuMenu,
@@ -50,6 +51,13 @@ const menuItems = [
     pathname: '/tenants',
     Icon: LuUserCircle,
     dataCy: 'tenantsNav'
+  },
+  {
+    key: 'sites',
+    labelId: 'Sites',
+    pathname: '/sites',
+    Icon: LuBuilding2,
+    dataCy: 'sitesNav'
   },
   {
     key: 'properties',
