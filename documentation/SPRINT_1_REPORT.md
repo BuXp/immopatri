@@ -29,6 +29,20 @@ manque dans MRE (2 niveaux), cœur métier du projet (DAT 2.3 → 2.5, 3.5).
 - `managers/validation.js` — validateurs server-side purs et testables.
 - Routes montées sous `/api/v2/sites` et `/api/v2/immeubles` dans `routes.js`.
 
+### Frontend (`webapps/landlord`)
+
+- Stores MobX `store/Site.js` et `store/Immeuble.js` (CRUD via `apiFetcher`),
+  enregistrés et hydratés dans `store/Store.js`.
+- Helpers `fetchSites` / `fetchImmeubles` + clés `QueryKeys.SITES` /
+  `QueryKeys.IMMEUBLES` dans `utils/restcalls.js`.
+- Page liste **Sites** : `pages/[organization]/sites/index.js` (cards + dialog
+  de création).
+- Page détail **Site** : `pages/[organization]/sites/[id].js` (infos site +
+  liste d'immeubles + création d'immeuble).
+- Page détail **Immeuble** : `pages/[organization]/immeubles/[id].js` (infos +
+  liste des lots rattachés).
+- Fil d'Ariane Site > Immeuble > Lot et entrée **Sites** dans `AppMenu.js`.
+
 ### Tests
 
 - `__tests__/managers/immopatri-validation.test.js` — Jest, couvre la validation
@@ -36,8 +50,9 @@ manque dans MRE (2 niveaux), cœur métier du projet (DAT 2.3 → 2.5, 3.5).
 
 ## Écarts / restes à faire
 
-- Pages frontend Next.js (`webapps/landlord`) : non livrées dans cet incrément.
 - Migration des `properties` existantes vers un `immeubleId` : à ajouter dans
   `services/api/scripts/migration.js`.
-- Le contrôle RBAC fin "accès au site demandé" repose pour l'instant sur le
+- Édition/suppression depuis l'UI (seules création et navigation sont câblées).
+- Tests E2E Playwright du parcours site → immeuble → lot.
+- Le contrôle RBAC fin « accès au site demandé » repose pour l'instant sur le
   scoping `realmId` (organisation).
