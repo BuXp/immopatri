@@ -1,5 +1,5 @@
+import { repartirCharges, validateImmeuble } from './validation.js';
 import { Collections } from '@immopatri/common';
-import { validateImmeuble } from './validation.js';
 
 export async function all(req, res) {
   const realm = req.realm;
@@ -58,6 +58,35 @@ export async function update(req, res) {
     return res.sendStatus(404);
   }
   return res.json(immeuble);
+}
+
+// Distributes a charge call across the immeuble's lots by tantiemes (copro).
+// GET /immeubles/:id/repartition?montant=X
+export async function repartition(req, res) {
+  const realm = req.realm;
+  const montant = Number(req.query.montant);
+  if (!Number.isFinite(montant)) {
+    return res.status(422).json({ errors: ['montant must be a number'] });
+  }
+  const immeuble = await Collections.Immeuble.findOne({
+    _id: req.params.id,
+    realmId: realm._id
+  }).lean();
+  if (!immeuble) {
+    return res.sendStatus(404);
+  }
+  const lots = await Collections.Property.find({
+    realmId: realm._id,
+    immeubleId: req.params.id
+  })
+    .sort({ numero: 1, name: 1 })
+    .lean();
+  const lignes = repartirCharges(lots, montant);
+  const totalTantiemes = lignes.reduce(
+    (sum, ligne) => sum + (ligne.tantiemes || 0),
+    0
+  );
+  return res.json({ montant, totalTantiemes, lignes });
 }
 
 export async function remove(req, res) {

@@ -95,3 +95,41 @@ export function computeQuotePart(tantiemes, montant) {
   }
   return Math.round((tantiemes / 10000) * montant * 100) / 100;
 }
+
+// Distributes a charge call (montant) across lots proportionally to their
+// tantiemes. The base is the sum of the lots' tantiemes; the last lot absorbs
+// the rounding remainder so the parts always sum back exactly to montant.
+export function repartirCharges(lots = [], montant) {
+  if (
+    typeof montant !== 'number' ||
+    !Array.isArray(lots) ||
+    lots.length === 0
+  ) {
+    return [];
+  }
+  const totalTantiemes = lots.reduce(
+    (sum, lot) =>
+      sum + (typeof lot.tantiemes === 'number' ? lot.tantiemes : 0),
+    0
+  );
+  const toLine = (lot, quotePart) => ({
+    lotId: lot._id ? String(lot._id) : undefined,
+    name: lot.name,
+    tantiemes: typeof lot.tantiemes === 'number' ? lot.tantiemes : 0,
+    quotePart
+  });
+  if (totalTantiemes <= 0) {
+    return lots.map((lot) => toLine(lot, 0));
+  }
+  let allocated = 0;
+  return lots.map((lot, index) => {
+    const tantiemes = typeof lot.tantiemes === 'number' ? lot.tantiemes : 0;
+    if (index === lots.length - 1) {
+      return toLine(lot, Math.round((montant - allocated) * 100) / 100);
+    }
+    const quotePart =
+      Math.round((tantiemes / totalTantiemes) * montant * 100) / 100;
+    allocated += quotePart;
+    return toLine(lot, quotePart);
+  });
+}

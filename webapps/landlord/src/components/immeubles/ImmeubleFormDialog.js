@@ -23,17 +23,35 @@ const MODES = [
   'autre'
 ];
 
-const EMPTY_FORM = { nom: '', adresse: '', type: '', modeDetention: '' };
+const EMPTY_FORM = {
+  nom: '',
+  adresse: '',
+  type: '',
+  modeDetention: '',
+  syndic: '',
+  contactSyndic: '',
+  emailSyndic: '',
+  numLotCopro: '',
+  tantiemes: '',
+  chargesCoproAnnuelles: ''
+};
 
 function toForm(immeuble) {
   if (!immeuble) {
     return EMPTY_FORM;
   }
+  const md = immeuble.modeDetention || {};
   return {
     nom: immeuble.nom || '',
     adresse: immeuble.adresse || '',
     type: immeuble.type || '',
-    modeDetention: immeuble.modeDetention?.type || ''
+    modeDetention: md.type || '',
+    syndic: md.syndic || '',
+    contactSyndic: md.contactSyndic || '',
+    emailSyndic: md.emailSyndic || '',
+    numLotCopro: md.numLotCopro || '',
+    tantiemes: md.tantiemes ?? '',
+    chargesCoproAnnuelles: md.chargesCoproAnnuelles ?? ''
   };
 }
 
@@ -72,8 +90,22 @@ export default function ImmeubleFormDialog({
       return;
     }
     setSaving(true);
+    const toNumber = (value) => (value === '' ? undefined : Number(value));
     const modeDetention = form.modeDetention
-      ? { ...(immeuble?.modeDetention || {}), type: form.modeDetention }
+      ? {
+          ...(immeuble?.modeDetention || {}),
+          type: form.modeDetention,
+          ...(form.modeDetention === 'copropriete'
+            ? {
+                syndic: form.syndic,
+                contactSyndic: form.contactSyndic,
+                emailSyndic: form.emailSyndic,
+                numLotCopro: form.numLotCopro,
+                tantiemes: toNumber(form.tantiemes),
+                chargesCoproAnnuelles: toNumber(form.chargesCoproAnnuelles)
+              }
+            : {})
+        }
       : immeuble?.modeDetention;
     const payload = {
       nom: form.nom,
@@ -143,6 +175,64 @@ export default function ImmeubleFormDialog({
               </select>
             </div>
           </div>
+          {form.modeDetention === 'copropriete' && (
+            <div className="grid gap-3 rounded-md border p-3">
+              <p className="text-sm font-medium">Copropriété</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="grid gap-1.5">
+                  <Label htmlFor="imm-syndic">Syndic</Label>
+                  <Input
+                    id="imm-syndic"
+                    value={form.syndic}
+                    onChange={set('syndic')}
+                  />
+                </div>
+                <div className="grid gap-1.5">
+                  <Label htmlFor="imm-numlot">N° lot copro</Label>
+                  <Input
+                    id="imm-numlot"
+                    value={form.numLotCopro}
+                    onChange={set('numLotCopro')}
+                  />
+                </div>
+                <div className="grid gap-1.5">
+                  <Label htmlFor="imm-contact">Contact syndic</Label>
+                  <Input
+                    id="imm-contact"
+                    value={form.contactSyndic}
+                    onChange={set('contactSyndic')}
+                  />
+                </div>
+                <div className="grid gap-1.5">
+                  <Label htmlFor="imm-email">Email syndic</Label>
+                  <Input
+                    id="imm-email"
+                    type="email"
+                    value={form.emailSyndic}
+                    onChange={set('emailSyndic')}
+                  />
+                </div>
+                <div className="grid gap-1.5">
+                  <Label htmlFor="imm-tantiemes">Tantièmes</Label>
+                  <Input
+                    id="imm-tantiemes"
+                    type="number"
+                    value={form.tantiemes}
+                    onChange={set('tantiemes')}
+                  />
+                </div>
+                <div className="grid gap-1.5">
+                  <Label htmlFor="imm-charges">Charges copro / an (€)</Label>
+                  <Input
+                    id="imm-charges"
+                    type="number"
+                    value={form.chargesCoproAnnuelles}
+                    onChange={set('chargesCoproAnnuelles')}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
           <MultiProprietaireSelector
             value={proprietaires}
             onChange={setProprietaires}

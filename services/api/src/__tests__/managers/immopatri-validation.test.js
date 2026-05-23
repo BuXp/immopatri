@@ -1,5 +1,6 @@
 import {
   computeQuotePart,
+  repartirCharges,
   validateImmeuble,
   validateProprietaire,
   validateSite
@@ -92,5 +93,37 @@ describe('ImmoPatri — computeQuotePart', () => {
 
   it('returns 0 for non-numeric inputs', () => {
     expect(computeQuotePart('500', 2000)).toBe(0);
+  });
+});
+
+describe('ImmoPatri — repartirCharges', () => {
+  it('distributes a charge call proportionally to tantiemes', () => {
+    const lots = [
+      { _id: 'a', name: 'Lot 1', tantiemes: 300 },
+      { _id: 'b', name: 'Lot 2', tantiemes: 700 }
+    ];
+    const lignes = repartirCharges(lots, 1000);
+    expect(lignes[0].quotePart).toBe(300);
+    expect(lignes[1].quotePart).toBe(700);
+  });
+
+  it('absorbs the rounding remainder on the last lot so parts sum exactly', () => {
+    const lots = [
+      { _id: 'a', tantiemes: 1 },
+      { _id: 'b', tantiemes: 1 },
+      { _id: 'c', tantiemes: 1 }
+    ];
+    const lignes = repartirCharges(lots, 100);
+    const total = lignes.reduce((sum, l) => sum + l.quotePart, 0);
+    expect(Math.round(total * 100) / 100).toBe(100);
+  });
+
+  it('returns zero parts when no lot has tantiemes', () => {
+    const lignes = repartirCharges([{ _id: 'a' }, { _id: 'b' }], 500);
+    expect(lignes.every((l) => l.quotePart === 0)).toBe(true);
+  });
+
+  it('returns an empty array for an invalid montant', () => {
+    expect(repartirCharges([{ _id: 'a', tantiemes: 10 }], 'x')).toEqual([]);
   });
 });

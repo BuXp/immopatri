@@ -16,7 +16,8 @@ export default class Immeuble {
       fetchOne: flow,
       create: flow,
       update: flow,
-      delete: flow
+      delete: flow,
+      repartition: flow
     });
   }
 
@@ -85,6 +86,18 @@ export default class Immeuble {
     try {
       yield apiFetcher().delete(`/immeubles/${ids.join(',')}`);
       return { status: 200 };
+    } catch (error) {
+      return { status: error?.response?.status };
+    }
+  }
+
+  // Distributes a charge call across the immeuble's lots by tantiemes (copro).
+  *repartition(immeubleId, montant) {
+    try {
+      const response = yield apiFetcher().get(
+        `/immeubles/${immeubleId}/repartition?montant=${montant}`
+      );
+      return { status: 200, data: response.data };
     } catch (error) {
       return { status: error?.response?.status };
     }

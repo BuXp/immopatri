@@ -13,7 +13,9 @@ const ImmeubleSchema = new mongoose.Schema<CollectionTypes.Immeuble>({
   type: String,
   modeDetention: {
     _id: false,
-    type: String, // monopropriete | copropriete | indivision | sci | sas | sarl | autre
+    // `type: { type: String }` so Mongoose treats modeDetention as a nested
+    // object with a `type` field, instead of collapsing it to a plain String.
+    type: { type: String }, // monopropriete | copropriete | indivision | sci | sas | sarl | autre
     syndic: String,
     contactSyndic: String,
     emailSyndic: String,

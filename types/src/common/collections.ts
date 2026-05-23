@@ -180,6 +180,7 @@ export namespace CollectionTypes {
     // ── ImmoPatri lot extensions (DAT Partie 2.5 / 3.5) ──
     immeubleId?: string;
     numero?: string;
+    tantiemes?: number;
     etage?: number;
     nombrePieces?: number;
     meuble?: boolean;

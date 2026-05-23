@@ -33,7 +33,7 @@ server-side exigé au DAT 3.6.
 | 1 | Hiérarchie Sites > Immeubles > Lots (modèles + API CRUD) | ✅ Backend + UI (pages, breadcrumb, édition) |
 | 2 | Propriétaires multiples (modèle + API + patrimoine) | ✅ Backend + UI (liste, fiche 4 onglets, MultiProprietaireSelector) |
 | 3 | DPE & Diagnostics + alertes | ✅ Service de détection + API alertes + page Conformité (cron node-cron optionnel ; email à venir) |
-| 4 | Copropriété & modes de détention | 🟡 Schéma préparé (`modeDetention`, `appelsCharges`) — routes/import à venir |
+| 4 | Copropriété & modes de détention | ✅ Schéma corrigé (bug Mongoose `type`) + champs copro dans le formulaire Immeuble + répartition des charges par tantièmes (API + simulateur UI) |
 | 5 | Exports PDF/Excel & quittances | ⬛ À faire (service `pdfgenerator` existant à étendre) |
 | 6 | Rapprochement bancaire CSV | ⬛ À faire |
 | 7–9 | Tableau de bord, conformité RGPD, hardening | ⬛ À faire |

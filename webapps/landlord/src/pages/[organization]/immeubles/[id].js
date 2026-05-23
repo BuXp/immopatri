@@ -11,6 +11,7 @@ import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge } from '../../../components/ui/badge';
 import { Button } from '../../../components/ui/button';
+import CoproprieteSection from '../../../components/immeubles/CoproprieteSection';
 import ImmeubleFormDialog from '../../../components/immeubles/ImmeubleFormDialog';
 import Link from 'next/link';
 import Page from '../../../components/Page';
@@ -93,6 +94,10 @@ function ImmeubleDetail() {
           <div>IBAN : {immeuble.iban || '—'}</div>
         </CardContent>
       </Card>
+
+      {immeuble.modeDetention?.type === 'copropriete' && (
+        <CoproprieteSection immeuble={immeuble} />
+      )}
 
       <h2 className="text-xl font-semibold mb-3">Lots ({lots.length})</h2>
       {lots.length === 0 ? (

@@ -26,6 +26,7 @@ const PropertySchema = new mongoose.Schema<CollectionTypes.Property>({
   // ── ImmoPatri lot extensions (DAT Partie 2.5 / 3.5) ──
   immeubleId: String,
   numero: String,
+  tantiemes: Number, // share of the building for charge distribution (copro)
   etage: Number,
   nombrePieces: Number,
   meuble: Boolean,
@@ -51,7 +52,9 @@ const PropertySchema = new mongoose.Schema<CollectionTypes.Property>({
   diagnostics: [
     {
       _id: false,
-      type: String,
+      // Wrapped so Mongoose keeps `diagnostics` as a subdocument array with a
+      // `type` field, instead of collapsing it to an array of String.
+      type: { type: String },
       dateRealisation: Date,
       dateExpiration: Date,
       resultat: String,

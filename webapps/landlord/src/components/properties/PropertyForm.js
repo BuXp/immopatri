@@ -64,6 +64,7 @@ const PropertyForm = observer(({ onSubmit }) => {
       },
       rent: store.property.selected?.price || '',
       immeubleId: store.property.selected?.immeubleId || '',
+      tantiemes: store.property.selected?.tantiemes ?? '',
       proprietaires: toJS(store.property.selected?.proprietaires || []).map(
         (link) => ({
           proprietaireId: link.proprietaireId,
@@ -142,6 +143,10 @@ const PropertyForm = observer(({ onSubmit }) => {
                   ))}
                 </select>
               </div>
+              <NumberField
+                label="Tantièmes (répartition copropriété)"
+                name="tantiemes"
+              />
               <MultiProprietaireSelector
                 value={values.proprietaires}
                 onChange={(next) => setFieldValue('proprietaires', next)}

@@ -100,6 +100,10 @@ export default function routes() {
   const immeublesRouter = express.Router();
   immeublesRouter.get('/', Middlewares.asyncWrapper(immeubleManager.all));
   immeublesRouter.get('/:id', Middlewares.asyncWrapper(immeubleManager.one));
+  immeublesRouter.get(
+    '/:id/repartition',
+    Middlewares.asyncWrapper(immeubleManager.repartition)
+  );
   immeublesRouter.post('/', Middlewares.asyncWrapper(immeubleManager.add));
   immeublesRouter.patch(
     '/:id',
