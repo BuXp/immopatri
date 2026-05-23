@@ -8,7 +8,7 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogفFooter,
+  DialogFooter,
   DialogHeader,
   DialogTitle
 } from '../../../components/ui/dialog';
