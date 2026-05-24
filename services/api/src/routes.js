@@ -144,6 +144,10 @@ export default function routes() {
   const alertesRouter = express.Router();
   alertesRouter.get('/', Middlewares.asyncWrapper(alerteManager.all));
   alertesRouter.post('/scan', Middlewares.asyncWrapper(alerteManager.scan));
+  alertesRouter.post(
+    '/notify',
+    Middlewares.asyncWrapper(alerteManager.notify)
+  );
   alertesRouter.patch(
     '/:id/acquittement',
     Middlewares.asyncWrapper(alerteManager.acknowledge)

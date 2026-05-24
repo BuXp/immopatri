@@ -1,4 +1,5 @@
 import { fetchAlertes, QueryKeys } from '../../../utils/restcalls';
+import { LuMail, LuRefreshCw } from 'react-icons/lu';
 import {
   Table,
   TableBody,
@@ -12,7 +13,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import AlerteBadge from '../../../components/alertes/AlerteBadge';
 import { Button } from '../../../components/ui/button';
 import Link from 'next/link';
-import { LuRefreshCw } from 'react-icons/lu';
 import moment from 'moment';
 import Page from '../../../components/Page';
 import { StoreContext } from '../../../store';
@@ -62,6 +62,7 @@ function Conformite() {
   const [niveau, setNiveau] = useState('');
   const [type, setType] = useState('');
   const [scanning, setScanning] = useState(false);
+  const [notifying, setNotifying] = useState(false);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: [QueryKeys.ALERTES, niveau, type],
@@ -88,6 +89,21 @@ function Conformite() {
     queryClient.invalidateQueries({ queryKey: [QueryKeys.ALERTES] });
   };
 
+  const handleNotify = async () => {
+    setNotifying(true);
+    const { status, data: result } = await store.alerte.notify();
+    setNotifying(false);
+    if (status !== 200 || !result?.sent) {
+      toast.error(
+        result?.error
+          ? `Échec de l'envoi : ${result.error}`
+          : "Échec de l'envoi de l'email"
+      );
+      return;
+    }
+    toast.success('Email de conformité envoyé');
+  };
+
   const handleAcknowledge = async (id) => {
     const { status } = await store.alerte.acknowledge(id);
     if (status !== 200) {
@@ -102,7 +118,16 @@ function Conformite() {
       loading={isLoading}
       dataCy="conformitePage"
       ActionBar={
-        <div className="flex justify-end p-2 md:p-0">
+        <div className="flex justify-end gap-2 p-2 md:p-0">
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={handleNotify}
+            disabled={notifying}
+          >
+            <LuMail className="size-4" />
+            Notifier par email
+          </Button>
           <Button className="gap-2" onClick={handleScan} disabled={scanning}>
             <LuRefreshCw className="size-4" />
             Scanner la conformité

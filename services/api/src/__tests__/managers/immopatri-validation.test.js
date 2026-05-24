@@ -58,6 +58,34 @@ describe('ImmoPatri validation — immeubles', () => {
     });
     expect(errors).toContain('modeDetention.type is invalid');
   });
+
+  it('accepts valid appels de charges', () => {
+    expect(
+      validateImmeuble({
+        nom: 'Bat A',
+        siteId: 'site1',
+        appelsCharges: [{ periode: '2026-T1', montant: 1200, statut: 'appele' }]
+      })
+    ).toEqual([]);
+  });
+
+  it('rejects a non-numeric charge call amount', () => {
+    const errors = validateImmeuble({
+      nom: 'Bat A',
+      siteId: 'site1',
+      appelsCharges: [{ periode: '2026-T1', montant: '1200' }]
+    });
+    expect(errors).toContain('appelsCharges.montant must be a number');
+  });
+
+  it('rejects an invalid charge call status', () => {
+    const errors = validateImmeuble({
+      nom: 'Bat A',
+      siteId: 'site1',
+      appelsCharges: [{ montant: 100, statut: 'unknown' }]
+    });
+    expect(errors).toContain('appelsCharges.statut is invalid');
+  });
 });
 
 describe('ImmoPatri validation — proprietaires', () => {

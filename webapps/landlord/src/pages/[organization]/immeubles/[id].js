@@ -96,7 +96,14 @@ function ImmeubleDetail() {
       </Card>
 
       {immeuble.modeDetention?.type === 'copropriete' && (
-        <CoproprieteSection immeuble={immeuble} />
+        <CoproprieteSection
+          immeuble={immeuble}
+          onChanged={() =>
+            queryClient.invalidateQueries({
+              queryKey: [QueryKeys.IMMEUBLES, id]
+            })
+          }
+        />
       )}
 
       <h2 className="text-xl font-semibold mb-3">Lots ({lots.length})</h2>

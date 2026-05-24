@@ -1,0 +1,35 @@
+<p>Bonjour <%= landlord.name %>,</p>
+
+<p>
+  Au <%= today %>, votre patrimoine compte <strong><%= counts.total %></strong>
+  alerte(s) de conformité :
+  <strong style="color:#dc2626;"><%= counts.rouge %> critique(s)</strong> et
+  <strong style="color:#f97316;"><%= counts.orange %> à venir</strong>.
+</p>
+
+<% if (alertes.length) { %>
+<table cellpadding="6" cellspacing="0" border="1" style="border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th>Niveau</th>
+      <th>Type</th>
+      <th>Détail</th>
+      <th>Échéance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% alertes.forEach(function (alerte) { %>
+    <tr>
+      <td style="color:<%= alerte.niveau === 'rouge' ? '#dc2626' : '#f97316' %>;">
+        <%= alerte.niveau %>
+      </td>
+      <td><%= alerte.type %></td>
+      <td><%= alerte.message %></td>
+      <td><%= alerte.dateExpiration %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<% } %>
+
+<p>Connectez-vous à ImmoPatri pour consulter le détail dans l'onglet Conformité.</p>

@@ -11,7 +11,8 @@ export default class Alerte {
       setItems: action,
       fetch: flow,
       scan: flow,
-      acknowledge: flow
+      acknowledge: flow,
+      notify: flow
     });
   }
 
@@ -48,6 +49,15 @@ export default class Alerte {
   *acknowledge(id) {
     try {
       const response = yield apiFetcher().patch(`/alertes/${id}/acquittement`);
+      return { status: 200, data: response.data };
+    } catch (error) {
+      return { status: error?.response?.status };
+    }
+  }
+
+  *notify() {
+    try {
+      const response = yield apiFetcher().post('/alertes/notify');
       return { status: 200, data: response.data };
     } catch (error) {
       return { status: error?.response?.status };

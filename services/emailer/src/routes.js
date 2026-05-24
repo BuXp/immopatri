@@ -20,6 +20,7 @@ async function _send(req, res) {
       break;
     default:
       allowedTemplates = [
+        'alerte',
         'invoice',
         'rentcall',
         'rentcall_last_reminder',

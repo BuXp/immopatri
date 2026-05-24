@@ -14,6 +14,8 @@ const MODE_DETENTION = [
 
 const PROPRIETAIRE_TYPES = ['physique', 'sci', 'sarl', 'sas', 'indivision'];
 
+const APPEL_CHARGE_STATUTS = ['appele', 'paye', 'impaye', 'en_attente'];
+
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 function isBlank(value) {
@@ -52,6 +54,27 @@ export function validateSite(body = {}) {
   return errors;
 }
 
+function validateAppelsCharges(appels, errors) {
+  if (appels === undefined) {
+    return;
+  }
+  if (!Array.isArray(appels)) {
+    errors.push('appelsCharges must be an array');
+    return;
+  }
+  for (const appel of appels) {
+    if (appel.montant !== undefined && typeof appel.montant !== 'number') {
+      errors.push('appelsCharges.montant must be a number');
+    }
+    if (
+      appel.statut !== undefined &&
+      !APPEL_CHARGE_STATUTS.includes(appel.statut)
+    ) {
+      errors.push('appelsCharges.statut is invalid');
+    }
+  }
+}
+
 export function validateImmeuble(body = {}) {
   const errors = [];
   if (isBlank(body.nom)) {
@@ -65,6 +88,7 @@ export function validateImmeuble(body = {}) {
     errors.push('modeDetention.type is invalid');
   }
   validateProprietaireLinks(body.proprietaires, errors);
+  validateAppelsCharges(body.appelsCharges, errors);
   return errors;
 }
 

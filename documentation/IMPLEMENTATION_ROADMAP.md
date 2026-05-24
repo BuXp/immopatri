@@ -31,9 +31,9 @@ server-side exigé au DAT 3.6.
 | --- | --- | --- |
 | 0 | Fondations DevSecOps (CI/CD, backup, provision, Nginx, MinIO/Kuma) | ✅ Fichiers livrés (pipeline en `workflow_dispatch`) |
 | 1 | Hiérarchie Sites > Immeubles > Lots (modèles + API CRUD) | ✅ Backend + UI (pages, breadcrumb, édition) |
-| 2 | Propriétaires multiples (modèle + API + patrimoine) | ✅ Backend + UI (liste, fiche 4 onglets, MultiProprietaireSelector) |
-| 3 | DPE & Diagnostics + alertes | ✅ Service de détection + API alertes + page Conformité (cron node-cron optionnel ; email à venir) |
-| 4 | Copropriété & modes de détention | ✅ Schéma corrigé (bug Mongoose `type`) + champs copro dans le formulaire Immeuble + répartition des charges par tantièmes (API + simulateur UI) |
+| 2 | Propriétaires multiples (modèle + API + patrimoine) | ✅ Backend + UI + upload de documents (MinIO si configuré, sinon FS) dans la fiche |
+| 3 | DPE & Diagnostics + alertes | ✅ Service de détection + API alertes + page Conformité + envoi email (template emailer `alerte`) ; cron node-cron optionnel |
+| 4 | Copropriété & modes de détention | ✅ Schéma corrigé (bug Mongoose `type`) + champs copro + répartition par tantièmes + CRUD des appels de charges |
 | 5 | Exports PDF/Excel & quittances | ⬛ À faire (service `pdfgenerator` existant à étendre) |
 | 6 | Rapprochement bancaire CSV | ⬛ À faire |
 | 7–9 | Tableau de bord, conformité RGPD, hardening | ⬛ À faire |

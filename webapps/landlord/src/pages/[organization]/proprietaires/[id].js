@@ -20,13 +20,15 @@ import {
   TabsList,
   TabsTrigger
 } from '../../../components/ui/tabs';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge } from '../../../components/ui/badge';
+import EntityDocuments from '../../../components/EntityDocuments';
 import Link from 'next/link';
 import { LuChevronRight } from 'react-icons/lu';
 import Page from '../../../components/Page';
 import { StoreContext } from '../../../store';
+import { toast } from 'sonner';
 import { useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { withAuthentication } from '../../../components/Authentication';
 
@@ -42,6 +44,7 @@ function Stat({ label, value }) {
 function ProprietaireDetail() {
   const store = useContext(StoreContext);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { organization, id } = router.query;
 
   const { data, isLoading, isError } = useQuery({
@@ -51,6 +54,20 @@ function ProprietaireDetail() {
   });
 
   const proprietaire = data?.proprietaire || {};
+
+  const handleDocumentsChange = async (documents) => {
+    const { status } = await store.proprietaire.update({
+      ...proprietaire,
+      documents
+    });
+    if (status !== 200) {
+      toast.error('Erreur lors de la mise à jour des documents');
+      return;
+    }
+    queryClient.invalidateQueries({
+      queryKey: [QueryKeys.PROPRIETAIRES, id, 'patrimoine']
+    });
+  };
   const sites = data?.sites || [];
   const immeubles = data?.immeubles || [];
   const lots = data?.lots || [];
@@ -164,18 +181,13 @@ function ProprietaireDetail() {
         </TabsContent>
 
         <TabsContent value="documents">
-          {(proprietaire.documents || []).length === 0 ? (
-            <p className="text-muted-foreground">
-              Aucun document. L&apos;upload vers MinIO sera ajouté
-              ultérieurement.
-            </p>
-          ) : (
-            <ul className="list-disc pl-6">
-              {proprietaire.documents.map((doc, index) => (
-                <li key={index}>{doc}</li>
-              ))}
-            </ul>
-          )}
+          {proprietaire._id ? (
+            <EntityDocuments
+              documents={proprietaire.documents || []}
+              folder="proprietaires"
+              onChange={handleDocumentsChange}
+            />
+          ) : null}
         </TabsContent>
 
         <TabsContent value="financier">

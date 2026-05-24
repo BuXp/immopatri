@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import {
   Table,
   TableBody,
@@ -7,23 +8,75 @@ import {
   TableHeader,
   TableRow
 } from '../ui/table';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import moment from 'moment';
 import { StoreContext } from '../../store';
 import { toast } from 'sonner';
 
-// Copropriété panel (DAT Sprint 4): syndic info, charge calls and a simulator
-// that distributes a charge call across the building's lots by tantièmes.
-export default function CoproprieteSection({ immeuble }) {
+const STATUTS = ['appele', 'paye', 'impaye', 'en_attente'];
+
+// Copropriété panel (DAT Sprint 4): syndic info, charge calls (CRUD) and a
+// simulator that distributes a charge call across the lots by tantièmes.
+export default function CoproprieteSection({ immeuble, onChanged }) {
   const store = useContext(StoreContext);
   const [montant, setMontant] = useState('');
   const [lignes, setLignes] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [appels, setAppels] = useState([]);
+  const [savingAppels, setSavingAppels] = useState(false);
   const md = immeuble.modeDetention || {};
-  const appels = immeuble.appelsCharges || [];
+
+  useEffect(() => {
+    setAppels(
+      (immeuble.appelsCharges || []).map((appel) => ({
+        periode: appel.periode || '',
+        montant: appel.montant ?? '',
+        statut: appel.statut || 'en_attente',
+        dateEnvoi: appel.dateEnvoi
+          ? new Date(appel.dateEnvoi).toISOString().slice(0, 10)
+          : ''
+      }))
+    );
+  }, [immeuble.appelsCharges]);
+
+  const addAppel = () =>
+    setAppels((prev) => [
+      ...prev,
+      { periode: '', montant: '', statut: 'en_attente', dateEnvoi: '' }
+    ]);
+
+  const updateAppel = (index, field, value) =>
+    setAppels((prev) =>
+      prev.map((appel, i) =>
+        i === index ? { ...appel, [field]: value } : appel
+      )
+    );
+
+  const removeAppel = (index) =>
+    setAppels((prev) => prev.filter((_, i) => i !== index));
+
+  const saveAppels = async () => {
+    setSavingAppels(true);
+    const appelsCharges = appels.map((appel) => ({
+      periode: appel.periode,
+      montant: appel.montant === '' ? undefined : Number(appel.montant),
+      statut: appel.statut,
+      dateEnvoi: appel.dateEnvoi || undefined
+    }));
+    const { status } = await store.immeuble.update({
+      ...immeuble,
+      appelsCharges
+    });
+    setSavingAppels(false);
+    if (status !== 200) {
+      toast.error("Erreur lors de l'enregistrement des appels de charges");
+      return;
+    }
+    toast.success('Appels de charges enregistrés');
+    onChanged?.();
+  };
 
   const handleRepartir = async () => {
     const value = Number(montant);
@@ -64,37 +117,100 @@ export default function CoproprieteSection({ immeuble }) {
           </div>
         </div>
 
-        {appels.length > 0 && (
-          <div>
-            <p className="text-sm font-medium mb-2">Appels de charges</p>
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm font-medium">Appels de charges</p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-2"
+              onClick={addAppel}
+            >
+              <LuPlus className="size-4" />
+              Ajouter
+            </Button>
+          </div>
+          {appels.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              Aucun appel de charges.
+            </p>
+          ) : (
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Période</TableHead>
-                  <TableHead>Montant</TableHead>
+                  <TableHead>Montant (€)</TableHead>
                   <TableHead>Statut</TableHead>
                   <TableHead>Envoyé le</TableHead>
+                  <TableHead />
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {appels.map((appel, index) => (
                   <TableRow key={index}>
-                    <TableCell>{appel.periode || '—'}</TableCell>
                     <TableCell>
-                      {appel.montant != null ? `${appel.montant} €` : '—'}
+                      <Input
+                        value={appel.periode}
+                        onChange={(event) =>
+                          updateAppel(index, 'periode', event.target.value)
+                        }
+                        placeholder="2026-T1"
+                      />
                     </TableCell>
-                    <TableCell>{appel.statut || '—'}</TableCell>
                     <TableCell>
-                      {appel.dateEnvoi
-                        ? moment(appel.dateEnvoi).format('ll')
-                        : '—'}
+                      <Input
+                        type="number"
+                        value={appel.montant}
+                        onChange={(event) =>
+                          updateAppel(index, 'montant', event.target.value)
+                        }
+                        className="w-28"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <select
+                        className="flex h-10 rounded-md border border-input bg-background px-2 text-sm"
+                        value={appel.statut}
+                        onChange={(event) =>
+                          updateAppel(index, 'statut', event.target.value)
+                        }
+                      >
+                        {STATUTS.map((statut) => (
+                          <option key={statut} value={statut}>
+                            {statut}
+                          </option>
+                        ))}
+                      </select>
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        type="date"
+                        value={appel.dateEnvoi}
+                        onChange={(event) =>
+                          updateAppel(index, 'dateEnvoi', event.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => removeAppel(index)}
+                      >
+                        <LuTrash2 className="size-4" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
+          )}
+          <div className="mt-2">
+            <Button onClick={saveAppels} disabled={savingAppels}>
+              Enregistrer les appels
+            </Button>
           </div>
-        )}
+        </div>
 
         <div className="rounded-md border p-3 grid gap-3">
           <p className="text-sm font-medium">
