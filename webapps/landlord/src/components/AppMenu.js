@@ -1,4 +1,5 @@
 import {
+  LuArrowRightLeft,
   LuBuilding2,
   LuKeyRound,
   LuLayoutDashboard,
@@ -88,6 +89,13 @@ const menuItems = [
     pathname: '/accounting/[year]',
     Icon: LuWallet,
     dataCy: 'accountingNav'
+  },
+  {
+    key: 'rapprochement',
+    labelId: 'Bank reconciliation',
+    pathname: '/rapprochement',
+    Icon: LuArrowRightLeft,
+    dataCy: 'rapprochementNav'
   },
   {
     key: 'settings',

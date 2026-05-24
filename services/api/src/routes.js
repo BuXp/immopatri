@@ -8,6 +8,7 @@ import * as leaseManager from './managers/leasemanager.js';
 import * as occupantManager from './managers/occupantmanager.js';
 import * as propertyManager from './managers/propertymanager.js';
 import * as proprietaireManager from './managers/proprietairemanager.js';
+import * as rapprochementManager from './managers/rapprochementmanager.js';
 import * as realmManager from './managers/realmmanager.js';
 import * as rentManager from './managers/rentmanager.js';
 import * as siteManager from './managers/sitemanager.js';
@@ -166,6 +167,12 @@ export default function routes() {
     Middlewares.asyncWrapper(exportManager.patrimoine)
   );
   router.use('/exports', exportsRouter);
+
+  // ── ImmoPatri: rapprochement bancaire CSV (DAT Sprint 6) ──
+  router.post(
+    '/rapprochement',
+    Middlewares.asyncWrapper(rapprochementManager.analyse)
+  );
 
   router.get(
     '/accounting/:year',

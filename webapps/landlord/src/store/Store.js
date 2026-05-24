@@ -12,6 +12,7 @@ import moment from 'moment';
 import Organization from './Organization';
 import Property from './Property';
 import Proprietaire from './Proprietaire';
+import Rapprochement from './Rapprochement';
 import Rent from './Rent';
 import Site from './Site';
 import Template from './Template';
@@ -30,6 +31,7 @@ export default class Store {
     this.site = new Site();
     this.immeuble = new Immeuble();
     this.proprietaire = new Proprietaire();
+    this.rapprochement = new Rapprochement();
     this.alerte = new Alerte();
     this.template = new Template();
     this.document = new Document();
