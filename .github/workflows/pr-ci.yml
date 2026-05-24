@@ -78,17 +78,21 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Compute lowercase image name
+        id: image
+        run: echo "name=$(echo '${{ matrix.image }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ matrix.image }}
+          images: ${{ steps.image.outputs.name }}
 
       - name: Build and push to GitHub Container Registry
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ${{ matrix.dockerfile }}
-          tags: '${{ matrix.image }}:${{ needs.setup.outputs.image_tag }}'
+          tags: '${{ steps.image.outputs.name }}:${{ needs.setup.outputs.image_tag }}'
           labels: ${{ steps.meta.outputs.labels }}
           push: false
