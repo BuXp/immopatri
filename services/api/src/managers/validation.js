@@ -1,0 +1,159 @@
+// Pure, side-effect-free validators shared by the ImmoPatri managers.
+// Each returns an array of human-readable error strings (empty === valid),
+// which keeps them trivially unit-testable without a database.
+
+const MODE_DETENTION = [
+  'monopropriete',
+  'copropriete',
+  'indivision',
+  'sci',
+  'sas',
+  'sarl',
+  'autre'
+];
+
+const PROPRIETAIRE_TYPES = ['physique', 'sci', 'sarl', 'sas', 'indivision'];
+
+const APPEL_CHARGE_STATUTS = ['appele', 'paye', 'impaye', 'en_attente'];
+
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+function isBlank(value) {
+  return value === undefined || value === null || String(value).trim() === '';
+}
+
+function validateProprietaireLinks(links, errors) {
+  if (links === undefined) {
+    return;
+  }
+  if (!Array.isArray(links)) {
+    errors.push('proprietaires must be an array');
+    return;
+  }
+  for (const link of links) {
+    if (
+      link.pourcentage !== undefined &&
+      (typeof link.pourcentage !== 'number' ||
+        link.pourcentage < 0 ||
+        link.pourcentage > 100)
+    ) {
+      errors.push('proprietaires.pourcentage must be a number between 0 and 100');
+    }
+  }
+}
+
+export function validateSite(body = {}) {
+  const errors = [];
+  if (isBlank(body.nom)) {
+    errors.push('nom is required');
+  }
+  if (body.taxeFonciere !== undefined && typeof body.taxeFonciere !== 'number') {
+    errors.push('taxeFonciere must be a number');
+  }
+  validateProprietaireLinks(body.proprietaires, errors);
+  return errors;
+}
+
+function validateAppelsCharges(appels, errors) {
+  if (appels === undefined) {
+    return;
+  }
+  if (!Array.isArray(appels)) {
+    errors.push('appelsCharges must be an array');
+    return;
+  }
+  for (const appel of appels) {
+    if (appel.montant !== undefined && typeof appel.montant !== 'number') {
+      errors.push('appelsCharges.montant must be a number');
+    }
+    if (
+      appel.statut !== undefined &&
+      !APPEL_CHARGE_STATUTS.includes(appel.statut)
+    ) {
+      errors.push('appelsCharges.statut is invalid');
+    }
+  }
+}
+
+export function validateImmeuble(body = {}) {
+  const errors = [];
+  if (isBlank(body.nom)) {
+    errors.push('nom is required');
+  }
+  if (isBlank(body.siteId)) {
+    errors.push('siteId is required');
+  }
+  const modeType = body.modeDetention && body.modeDetention.type;
+  if (modeType !== undefined && !MODE_DETENTION.includes(modeType)) {
+    errors.push('modeDetention.type is invalid');
+  }
+  validateProprietaireLinks(body.proprietaires, errors);
+  validateAppelsCharges(body.appelsCharges, errors);
+  return errors;
+}
+
+export function validateProprietaire(body = {}) {
+  const errors = [];
+  if (body.type !== undefined && !PROPRIETAIRE_TYPES.includes(body.type)) {
+    errors.push('type is invalid');
+  }
+  if (body.type === 'physique') {
+    if (isBlank(body.nom)) {
+      errors.push('nom is required for a physical person');
+    }
+  } else if (body.type !== undefined) {
+    if (isBlank(body.raisonSociale)) {
+      errors.push('raisonSociale is required for a legal entity');
+    }
+  }
+  if (!isBlank(body.email) && !EMAIL_RE.test(body.email)) {
+    errors.push('email is invalid');
+  }
+  return errors;
+}
+
+// Quote-part by lot from copro tantiemes (base 10000) for a charge call.
+export function computeQuotePart(tantiemes, montant) {
+  if (typeof tantiemes !== 'number' || typeof montant !== 'number') {
+    return 0;
+  }
+  return Math.round((tantiemes / 10000) * montant * 100) / 100;
+}
+
+// Distributes a charge call (montant) across lots proportionally to their
+// tantiemes. The base is the sum of the lots' tantiemes; the last lot absorbs
+// the rounding remainder so the parts always sum back exactly to montant.
+export function repartirCharges(lots = [], montant) {
+  if (
+    typeof montant !== 'number' ||
+    !Array.isArray(lots) ||
+    lots.length === 0
+  ) {
+    return [];
+  }
+  const totalTantiemes = lots.reduce(
+    (sum, lot) =>
+      sum + (typeof lot.tantiemes === 'number' ? lot.tantiemes : 0),
+    0
+  );
+  const toLine = (lot, quotePart) => ({
+    lotId: lot._id ? String(lot._id) : undefined,
+    name: lot.name,
+    tantiemes: typeof lot.tantiemes === 'number' ? lot.tantiemes : 0,
+    quotePart
+  });
+  if (totalTantiemes <= 0) {
+    return lots.map((lot) => toLine(lot, 0));
+  }
+  let allocated = 0;
+  return lots.map((lot, index) => {
+    const tantiemes = typeof lot.tantiemes === 'number' ? lot.tantiemes : 0;
+    if (index === lots.length - 1) {
+      return toLine(lot, Math.round((montant - allocated) * 100) / 100);
+    }
+    const quotePart =
+      Math.round((tantiemes / totalTantiemes) * montant * 100) / 100;
+    allocated += quotePart;
+    return toLine(lot, quotePart);
+  });
+}

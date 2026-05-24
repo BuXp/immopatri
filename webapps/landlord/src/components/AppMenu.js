@@ -1,9 +1,13 @@
 import {
+  LuArrowRightLeft,
+  LuBuilding2,
   LuKeyRound,
   LuLayoutDashboard,
   LuMenu,
   LuSettings,
+  LuShieldCheck,
   LuUserCircle,
+  LuUsers,
   LuWallet
 } from 'react-icons/lu';
 import {
@@ -52,6 +56,20 @@ const menuItems = [
     dataCy: 'tenantsNav'
   },
   {
+    key: 'sites',
+    labelId: 'Sites',
+    pathname: '/sites',
+    Icon: LuBuilding2,
+    dataCy: 'sitesNav'
+  },
+  {
+    key: 'proprietaires',
+    labelId: 'Owners',
+    pathname: '/proprietaires',
+    Icon: LuUsers,
+    dataCy: 'proprietairesNav'
+  },
+  {
     key: 'properties',
     labelId: 'Properties',
     pathname: '/properties',
@@ -59,11 +77,25 @@ const menuItems = [
     dataCy: 'propertiesNav'
   },
   {
+    key: 'conformite',
+    labelId: 'Compliance',
+    pathname: '/conformite',
+    Icon: LuShieldCheck,
+    dataCy: 'conformiteNav'
+  },
+  {
     key: 'accounting',
     labelId: 'Accounting',
     pathname: '/accounting/[year]',
     Icon: LuWallet,
     dataCy: 'accountingNav'
+  },
+  {
+    key: 'rapprochement',
+    labelId: 'Bank reconciliation',
+    pathname: '/rapprochement',
+    Icon: LuArrowRightLeft,
+    dataCy: 'rapprochementNav'
   },
   {
     key: 'settings',

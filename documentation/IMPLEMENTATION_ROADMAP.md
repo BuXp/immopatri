@@ -1,0 +1,49 @@
+# ImmoPatri — Roadmap d'implémentation du DAT v1.0
+
+Ce document mappe le Document d'Architecture Technique (DAT v1.0) sur
+l'architecture **réelle** du monorepo (fork ImmoPatri), qui diffère de
+l'arborescence simplifiée supposée par les prompts du DAT (`api/models/*.js`,
+`frontend/pages/*`).
+
+## Correspondance architecture
+
+| DAT (prompt) | Emplacement réel dans ce dépôt |
+| --- | --- |
+| `api/models/Site.js` | `services/common/src/collections/site.ts` (schéma Mongoose typé) |
+| `api/models/Immeuble.js` | `services/common/src/collections/immeuble.ts` |
+| `api/models/Proprietaire.js` | `services/common/src/collections/proprietaire.ts` |
+| Extension `Property` (lot) | `services/common/src/collections/property.ts` + type dans `types/src/common/collections.ts` |
+| `api/routes/sites.js` | managers `services/api/src/managers/sitemanager.js` câblés dans `services/api/src/routes.js` |
+| Validation Joi | `services/api/src/managers/validation.js` (validateurs purs, testables) |
+| Endpoints `/api/v1/...` | montés sous le préfixe réel **`/api/v2/...`** via la gateway |
+| `frontend/pages/*` | webapp Next.js `webapps/landlord` (à venir) |
+
+## Multi-tenant
+
+IP isole les données par `realmId` (organisation), injecté par le middleware
+`checkOrganization`. Toutes les nouvelles collections embarquent `realmId` et
+tous les managers filtrent dessus — c'est la base du contrôle d'accès RBAC
+server-side exigé au DAT 3.6.
+
+## État d'avancement par sprint
+
+| Sprint | Périmètre DAT | État |
+| --- | --- | --- |
+| 0 | Fondations DevSecOps (CI/CD, backup, provision, Nginx, MinIO/Kuma) | ✅ Fichiers livrés (pipeline en `workflow_dispatch`) |
+| 1 | Hiérarchie Sites > Immeubles > Lots (modèles + API CRUD) | ✅ Backend + UI (pages, breadcrumb, édition) |
+| 2 | Propriétaires multiples (modèle + API + patrimoine) | ✅ Backend + UI + upload de documents (MinIO si configuré, sinon FS) dans la fiche |
+| 3 | DPE & Diagnostics + alertes | ✅ Service de détection + API alertes + page Conformité + envoi email (template emailer `alerte`) ; cron node-cron optionnel |
+| 4 | Copropriété & modes de détention | ✅ Schéma corrigé (bug Mongoose `type`) + champs copro + répartition par tantièmes + CRUD des appels de charges |
+| 5 | Exports PDF/Excel & quittances | ✅ Quittance de loyer PDF (template pdfgenerator) + exports Excel (.xlsx) état locatif & patrimoine |
+| 6 | Rapprochement bancaire CSV | ✅ Parseur CSV + matching libellé/montant + suggestions + application via le flux de paiement existant |
+| 7 | Tableau de bord patrimoine | ✅ KPIs (sites/immeubles/lots, occupation, loyers, alertes) — API + cartes UI |
+| 8 | Conformité RGPD | ✅ Export des données personnelles + anonymisation des propriétaires |
+| 9 | Hardening | ✅ Bornage des entrées (CSV), masquage PII, anti-traversée + doc de durcissement |
+
+## Prochaines étapes recommandées
+
+1. Pages Next.js `webapps/landlord` : Sites (cards + formulaire), détail Site >
+   Immeubles, détail Immeuble > Lots, breadcrumb.
+2. Sélecteur multi-propriétaires réutilisable dans les formulaires.
+3. Service d'alertes (`alerteService` + `alerteJob` node-cron) pour DPE/diagnostics.
+4. Migration de données : rattacher les `properties` IP existantes à un immeuble.

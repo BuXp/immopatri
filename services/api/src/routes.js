@@ -1,12 +1,19 @@
 import * as accountingManager from './managers/accountingmanager.js';
+import * as alerteManager from './managers/alertemanager.js';
 import * as dashboardManager from './managers/dashboardmanager.js';
 import * as emailManager from './managers/emailmanager.js';
+import * as exportManager from './managers/exportmanager.js';
+import * as immeubleManager from './managers/immeublemanager.js';
 import * as leaseManager from './managers/leasemanager.js';
 import * as occupantManager from './managers/occupantmanager.js';
 import * as propertyManager from './managers/propertymanager.js';
+import * as proprietaireManager from './managers/proprietairemanager.js';
+import * as rapprochementManager from './managers/rapprochementmanager.js';
 import * as realmManager from './managers/realmmanager.js';
 import * as rentManager from './managers/rentmanager.js';
-import { Middlewares, Service } from '@microrealestate/common';
+import * as rgpdManager from './managers/rgpdmanager.js';
+import * as siteManager from './managers/sitemanager.js';
+import { Middlewares, Service } from '@immopatri/common';
 import express from 'express';
 
 export default function routes() {
@@ -30,6 +37,10 @@ export default function routes() {
 
   const dashboardRouter = express.Router();
   dashboardRouter.get('/', Middlewares.asyncWrapper(dashboardManager.all));
+  dashboardRouter.get(
+    '/patrimoine',
+    Middlewares.asyncWrapper(dashboardManager.patrimoine)
+  );
   router.use('/dashboard', dashboardRouter);
 
   const leasesRouter = express.Router();
@@ -83,6 +94,102 @@ export default function routes() {
     Middlewares.asyncWrapper(propertyManager.remove)
   );
   router.use('/properties', propertiesRouter);
+
+  // ── ImmoPatri: hierarchie patrimoniale Sites > Immeubles > Lots (DAT Sprint 1) ──
+  const sitesRouter = express.Router();
+  sitesRouter.get('/', Middlewares.asyncWrapper(siteManager.all));
+  sitesRouter.get('/:id', Middlewares.asyncWrapper(siteManager.one));
+  sitesRouter.post('/', Middlewares.asyncWrapper(siteManager.add));
+  sitesRouter.patch('/:id', Middlewares.asyncWrapper(siteManager.update));
+  sitesRouter.delete('/:ids', Middlewares.asyncWrapper(siteManager.remove));
+  router.use('/sites', sitesRouter);
+
+  const immeublesRouter = express.Router();
+  immeublesRouter.get('/', Middlewares.asyncWrapper(immeubleManager.all));
+  immeublesRouter.get('/:id', Middlewares.asyncWrapper(immeubleManager.one));
+  immeublesRouter.get(
+    '/:id/repartition',
+    Middlewares.asyncWrapper(immeubleManager.repartition)
+  );
+  immeublesRouter.post('/', Middlewares.asyncWrapper(immeubleManager.add));
+  immeublesRouter.patch(
+    '/:id',
+    Middlewares.asyncWrapper(immeubleManager.update)
+  );
+  immeublesRouter.delete(
+    '/:ids',
+    Middlewares.asyncWrapper(immeubleManager.remove)
+  );
+  router.use('/immeubles', immeublesRouter);
+
+  // ── ImmoPatri: proprietaires multiples (DAT Sprint 2) ──
+  const proprietairesRouter = express.Router();
+  proprietairesRouter.get('/', Middlewares.asyncWrapper(proprietaireManager.all));
+  proprietairesRouter.get(
+    '/:id/patrimoine',
+    Middlewares.asyncWrapper(proprietaireManager.patrimoine)
+  );
+  proprietairesRouter.get(
+    '/:id',
+    Middlewares.asyncWrapper(proprietaireManager.one)
+  );
+  proprietairesRouter.post(
+    '/',
+    Middlewares.asyncWrapper(proprietaireManager.add)
+  );
+  proprietairesRouter.patch(
+    '/:id',
+    Middlewares.asyncWrapper(proprietaireManager.update)
+  );
+  proprietairesRouter.delete(
+    '/:ids',
+    Middlewares.asyncWrapper(proprietaireManager.remove)
+  );
+  router.use('/proprietaires', proprietairesRouter);
+
+  // ── ImmoPatri: alertes de conformité DPE & diagnostics (DAT Sprint 3) ──
+  const alertesRouter = express.Router();
+  alertesRouter.get('/', Middlewares.asyncWrapper(alerteManager.all));
+  alertesRouter.post('/scan', Middlewares.asyncWrapper(alerteManager.scan));
+  alertesRouter.post(
+    '/notify',
+    Middlewares.asyncWrapper(alerteManager.notify)
+  );
+  alertesRouter.patch(
+    '/:id/acquittement',
+    Middlewares.asyncWrapper(alerteManager.acknowledge)
+  );
+  router.use('/alertes', alertesRouter);
+
+  // ── ImmoPatri: exports Excel (DAT Sprint 5) ──
+  const exportsRouter = express.Router();
+  exportsRouter.get(
+    '/etat-locatif',
+    Middlewares.asyncWrapper(exportManager.etatLocatif)
+  );
+  exportsRouter.get(
+    '/patrimoine',
+    Middlewares.asyncWrapper(exportManager.patrimoine)
+  );
+  router.use('/exports', exportsRouter);
+
+  // ── ImmoPatri: rapprochement bancaire CSV (DAT Sprint 6) ──
+  router.post(
+    '/rapprochement',
+    Middlewares.asyncWrapper(rapprochementManager.analyse)
+  );
+
+  // ── ImmoPatri: conformité RGPD (DAT Sprint 8) ──
+  const rgpdRouter = express.Router();
+  rgpdRouter.get(
+    '/proprietaires/:id/export',
+    Middlewares.asyncWrapper(rgpdManager.exportProprietaire)
+  );
+  rgpdRouter.post(
+    '/proprietaires/:id/anonymisation',
+    Middlewares.asyncWrapper(rgpdManager.anonymiser)
+  );
+  router.use('/rgpd', rgpdRouter);
 
   router.get(
     '/accounting/:year',

@@ -1,9 +1,9 @@
-![Docker](https://github.com/microrealestate/emailer/workflows/Docker/badge.svg)
+![Docker](https://github.com/immopatri/emailer/workflows/Docker/badge.svg)
 
 # emailer
 
 Generates and sends emails.
-This service is part of the MicroRealEstate application more [here](https://github.com/microrealestate/microrealestate/blob/master/README.md).
+This service is part of the ImmoPatri application more [here](https://github.com/immopatri/immopatri/blob/master/README.md).
 
 # API
 

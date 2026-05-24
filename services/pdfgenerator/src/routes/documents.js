@@ -7,12 +7,13 @@ import {
   Middlewares,
   Service,
   ServiceError
-} from '@microrealestate/common';
+} from '@immopatri/common';
 import express from 'express';
 import fs from 'fs-extra';
 import Handlebars from 'handlebars';
 import moment from 'moment';
 import path from 'path';
+import { sanitize } from '../utils/index.js';
 import uploadMiddleware from '../utils/uploadmiddelware.js';
 
 async function _getTempate(organization, templateId) {
@@ -240,6 +241,40 @@ export default function () {
    */
   const { UPLOADS_DIRECTORY } = Service.getInstance().envConfig.getValues();
   const documentsApi = express.Router();
+
+  // Stream a previously uploaded file by its storage key (url), without
+  // requiring a Document record. Used by entity attachments (proprietaires,
+  // lots…). Registered before '/:id' so 'download' isn't captured as an id.
+  documentsApi.get(
+    '/download',
+    Middlewares.asyncWrapper(async (req, res) => {
+      const url = req.query.url;
+      if (typeof url !== 'string' || !url || url.indexOf('..') !== -1) {
+        throw new ServiceError('missing or invalid url', 422);
+      }
+      // Scope to the caller's organisation directory to prevent cross-org reads.
+      const orgPrefix = `${sanitize(req.realm.name)}-${sanitize(
+        req.realm._id
+      )}`;
+      if (!url.startsWith(orgPrefix)) {
+        throw new ServiceError('forbidden', 403);
+      }
+
+      // Resolve and confirm the path stays within the uploads directory.
+      const baseDir = path.resolve(UPLOADS_DIRECTORY);
+      const filePath = path.resolve(baseDir, url);
+      if (filePath !== baseDir && !filePath.startsWith(baseDir + path.sep)) {
+        throw new ServiceError('forbidden', 403);
+      }
+      if (fs.existsSync(filePath)) {
+        return fs.createReadStream(filePath).pipe(res);
+      }
+      if (s3.isEnabled(req.realm.thirdParties?.b2)) {
+        return s3.downloadFile(req.realm.thirdParties.b2, url).pipe(res);
+      }
+      throw new ServiceError('file not found', 404);
+    })
+  );
 
   documentsApi.get(
     '/:document/:id/:term',

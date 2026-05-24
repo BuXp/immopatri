@@ -11,10 +11,10 @@ COPY types types
 COPY services/common services/common
 COPY services/tenantapi services/tenantapi
 RUN --mount=type=cache,id=node_modules,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn \
-    yarn workspaces focus @microrealestate/tenantapi && \
-    yarn workspace @microrealestate/types run build && \
-    yarn workspace @microrealestate/common run build && \
-    yarn workspace @microrealestate/tenantapi run build
+    yarn workspaces focus @immopatri/tenantapi && \
+    yarn workspace @immopatri/types run build && \
+    yarn workspace @immopatri/common run build && \
+    yarn workspace @immopatri/tenantapi run build
 
 FROM base AS deps
 WORKDIR /usr/app
@@ -29,7 +29,7 @@ COPY --from=build /usr/app/services/tenantapi/package.json ./services/tenantapi/
 COPY --from=build /usr/app/services/common/dist ./services/common/dist
 COPY --from=build /usr/app/services/tenantapi/dist ./services/tenantapi/dist
 RUN --mount=type=cache,id=node_modules,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn \
-    yarn workspaces focus --production @microrealestate/tenantapi
+    yarn workspaces focus --production @immopatri/tenantapi
 
 FROM gcr.io/distroless/nodejs20-debian12
 ENV NODE_ENV production

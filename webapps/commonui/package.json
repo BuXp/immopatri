@@ -1,7 +1,7 @@
 {
-  "name": "@microrealestate/commonui",
+  "name": "@immopatri/commonui",
   "version": "1.0.0",
-  "description": "Common modules required for the MicroRealEstate application'",
+  "description": "Common modules required for the ImmoPatri application'",
   "author": "Camel Aissani",
   "license": "MIT",
   "private": true,

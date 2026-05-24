@@ -4,7 +4,7 @@ import {
   Middlewares,
   Service,
   ServiceError
-} from '@microrealestate/common';
+} from '@immopatri/common';
 import express from 'express';
 import locale from 'locale';
 
@@ -20,6 +20,7 @@ async function _send(req, res) {
       break;
     default:
       allowedTemplates = [
+        'alerte',
         'invoice',
         'rentcall',
         'rentcall_last_reminder',

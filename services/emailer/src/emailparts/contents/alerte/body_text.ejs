@@ -1,0 +1,7 @@
+Bonjour <%= landlord.name %>,
+
+Au <%= today %>, votre patrimoine compte <%= counts.total %> alerte(s) de conformité : <%= counts.rouge %> critique(s) et <%= counts.orange %> à venir.
+
+<% alertes.forEach(function (alerte) { %>- [<%= alerte.niveau %>] <%= alerte.type %> : <%= alerte.message %> (échéance <%= alerte.dateExpiration %>)
+<% }); %>
+Connectez-vous à ImmoPatri pour consulter le détail dans l'onglet Conformité.

@@ -1,5 +1,18 @@
-import { Collections } from '@microrealestate/common';
+import { buildPatrimoineDashboard } from './dashboardbuilders.js';
+import { Collections } from '@immopatri/common';
 import moment from 'moment';
+
+// ImmoPatri patrimoine overview (DAT Sprint 7).
+export async function patrimoine(req, res) {
+  const realm = req.realm;
+  const [sites, immeubles, lots, alertes] = await Promise.all([
+    Collections.Site.find({ realmId: realm._id }).lean(),
+    Collections.Immeuble.find({ realmId: realm._id }).lean(),
+    Collections.Property.find({ realmId: realm._id }).lean(),
+    Collections.Alerte.find({ realmId: realm._id }).lean()
+  ]);
+  return res.json(buildPatrimoineDashboard(sites, immeubles, lots, alertes));
+}
 
 export async function all(req, res) {
   const now = moment();

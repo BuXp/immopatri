@@ -17,6 +17,35 @@ export namespace CollectionTypes {
     country: string;
   };
 
+  // ── ImmoPatri shared sub-documents (DAT Partie 3.5) ──
+  export type PartAssurance = {
+    assureur?: string;
+    numero?: string;
+    expiration?: Date;
+  };
+
+  export type PartProprietaireLink = {
+    proprietaireId: string;
+    pourcentage: number;
+  };
+
+  export type PartDPE = {
+    note?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
+    dateRealisation?: Date;
+    dateExpiration?: Date;
+    fichier?: string;
+    loiClimatAlerte?: boolean;
+  };
+
+  export type PartDiagnostic = {
+    type: string;
+    dateRealisation?: Date;
+    dateExpiration?: Date;
+    resultat?: string;
+    fichier?: string;
+    alerte?: boolean;
+  };
+
   export type Account = {
     _id: string;
     firstname: string;
@@ -147,6 +176,135 @@ export namespace CollectionTypes {
     building: string;
     level: string;
     location: string;
+
+    // ── ImmoPatri lot extensions (DAT Partie 2.5 / 3.5) ──
+    immeubleId?: string;
+    numero?: string;
+    tantiemes?: number;
+    etage?: number;
+    nombrePieces?: number;
+    meuble?: boolean;
+    loyerHC?: number;
+    charges?: number;
+    loyerTotal?: number;
+    depotGarantie?: number;
+    statut?: 'loue' | 'vacant' | 'travaux' | 'preavis' | 'reserve';
+    assurancePNO?: CollectionTypes.PartAssurance;
+    dpe?: CollectionTypes.PartDPE;
+    diagnostics?: CollectionTypes.PartDiagnostic[];
+    photos?: string[];
+    documents?: string[];
+    proprietaires?: CollectionTypes.PartProprietaireLink[];
+  };
+
+  // ── ImmoPatri new collections (DAT Partie 3.5) ──
+  export type Site = {
+    _id: string;
+    realmId: string;
+    nom: string;
+    adresse?: string;
+    ville?: string;
+    codePostal?: string;
+    region?: string;
+    pays?: string;
+    banquePrincipale?: string;
+    assurance?: CollectionTypes.PartAssurance;
+    taxeFonciere?: number;
+    notes?: string;
+    proprietaires?: CollectionTypes.PartProprietaireLink[];
+    documents?: string[];
+    createdAt?: Date;
+    updatedAt?: Date;
+  };
+
+  export type Immeuble = {
+    _id: string;
+    realmId: string;
+    siteId: string;
+    nom: string;
+    adresse?: string;
+    refCadastrale?: string;
+    type?: string;
+    modeDetention?: {
+      type?:
+        | 'monopropriete'
+        | 'copropriete'
+        | 'indivision'
+        | 'sci'
+        | 'sas'
+        | 'sarl'
+        | 'autre';
+      syndic?: string;
+      contactSyndic?: string;
+      emailSyndic?: string;
+      numLotCopro?: string;
+      tantiemes?: number;
+      chargesCoproAnnuelles?: number;
+      reglementCopro?: string;
+      chargesCommunes?: number;
+      repartitionParLot?: boolean;
+    };
+    appelsCharges?: {
+      periode?: string;
+      montant?: number;
+      dateEnvoi?: Date;
+      datePaiement?: Date;
+      statut?: string;
+      document?: string;
+    }[];
+    proprietaires?: CollectionTypes.PartProprietaireLink[];
+    assuranceImmeuble?: CollectionTypes.PartAssurance;
+    banque?: string;
+    iban?: string;
+    taxeFonciere?: number;
+    travaux?: {
+      description?: string;
+      budget?: number;
+      datePrevu?: Date;
+      statut?: string;
+    }[];
+    createdAt?: Date;
+    updatedAt?: Date;
+  };
+
+  export type Proprietaire = {
+    _id: string;
+    realmId: string;
+    nom?: string;
+    prenom?: string;
+    raisonSociale?: string;
+    type?: 'physique' | 'sci' | 'sarl' | 'sas' | 'indivision';
+    siren?: string;
+    adresse?: string;
+    email?: string;
+    telephone?: string;
+    banques?: { banque?: string; iban?: string }[];
+    assurances?: {
+      type?: string;
+      assureur?: string;
+      numero?: string;
+      expiration?: Date;
+    }[];
+    documents?: string[];
+    valeurEstimePatrimoine?: number;
+    anonymise?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+  };
+
+  export type Alerte = {
+    _id: string;
+    realmId: string;
+    lotId?: string;
+    immeubleId?: string;
+    siteId?: string;
+    type: string;
+    niveau: 'orange' | 'rouge';
+    message: string;
+    dateExpiration?: Date;
+    dateAlerte?: Date;
+    envoyeEmail?: boolean;
+    acquittee?: boolean;
   };
 
   export type Template = {

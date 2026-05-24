@@ -1,11 +1,11 @@
 {
-  "name": "microrealestate",
+  "name": "immopatri",
   "version": "1.0.0-alpha.1",
   "description": "The application which helps the landlords to manage their property rents.",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microrealestate/microrealestate.git"
+    "url": "git+https://github.com/immopatri/immopatri.git"
   },
   "keywords": [
     "property management",
@@ -18,9 +18,9 @@
   "author": "Camel Aissani",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/microrealestate/microrealestate/issues"
+    "url": "https://github.com/immopatri/immopatri/issues"
   },
-  "homepage": "https://github.com/microrealestate/microrealestate#readme",
+  "homepage": "https://github.com/immopatri/immopatri#readme",
   "workspaces": [
     "cli",
     "e2e",
@@ -29,9 +29,9 @@
     "types"
   ],
   "scripts": {
-    "e2e:ci": "yarn workspace @microrealestate/e2e run cypress:ci",
-    "e2e:run": "yarn workspace @microrealestate/e2e run cypress:run",
-    "e2e:open": "yarn workspace @microrealestate/e2e run cypress:open",
+    "e2e:ci": "yarn workspace @immopatri/e2e run cypress:ci",
+    "e2e:run": "yarn workspace @immopatri/e2e run cypress:run",
+    "e2e:open": "yarn workspace @immopatri/e2e run cypress:open",
     "format": "yarn workspaces foreach run format",
     "lint": "yarn workspaces foreach -pv run lint",
     "dev": "cross-env MRE_VERSION=dev node cli/src/index.js dev",

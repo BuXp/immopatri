@@ -1,4 +1,4 @@
-import { EnvironmentConfig, logger, Service } from '@microrealestate/common';
+import { EnvironmentConfig, logger, Service } from '@immopatri/common';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import i18n from 'i18n';
@@ -35,7 +35,7 @@ async function Main() {
         ALLOW_SENDING_EMAILS:
           process.env.NODE_ENV === 'production' ||
           process.env.ALLOW_SENDING_EMAILS === 'true',
-        APP_NAME: process.env.APP_NAME || 'MicroRealEstate',
+        APP_NAME: process.env.APP_NAME || 'ImmoPatri',
         LANDLORD_APP_URL:
           process.env.LANDLORD_APP_URL || 'http://localhost:8080/landlord',
         TENANT_APP_URL:

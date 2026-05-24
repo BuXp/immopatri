@@ -1,3 +1,3 @@
-![Docker](https://github.com/microrealestate/authenticator/workflows/Docker/badge.svg)
+![Docker](https://github.com/immopatri/authenticator/workflows/Docker/badge.svg)
 
 # authenticator

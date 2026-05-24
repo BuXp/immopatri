@@ -29,8 +29,8 @@ Here is a diagram showcasing the microservices on the backend and the two fronte
 #### Clone the GitHub repository
 
 ```shell
-git clone https://github.com/microrealestate/microrealestate.git
-cd microrealestate
+git clone https://github.com/immopatri/immopatri.git
+cd immopatri
 ```
 
 #### Install de application dependencies

@@ -1,7 +1,7 @@
 {
-  "name": "@microrealestate/types",
+  "name": "@immopatri/types",
   "version": "1.0.0",
-  "description": "Typescript types for the MicroRealEstate application'",
+  "description": "Typescript types for the ImmoPatri application'",
   "author": "Camel Aissani",
   "license": "MIT",
   "type": "module",

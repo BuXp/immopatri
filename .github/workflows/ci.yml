@@ -76,11 +76,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Compute lowercase image name
+        id: image
+        run: echo "name=$(echo '${{ matrix.image }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ matrix.image }}
+          images: ${{ steps.image.outputs.name }}
 
       - name: Build and push to GitHub Container Registry
         uses: docker/build-push-action@v5
@@ -88,7 +92,7 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          tags: '${{ matrix.image }}:${{ github.sha }}'
+          tags: '${{ steps.image.outputs.name }}:${{ github.sha }}'
           labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
@@ -106,7 +110,7 @@ jobs:
       - name: Build linux cli
         run: |
           npm install -g @yao-pkg/pkg
-          yarn workspaces focus @microrealestate/cli
+          yarn workspaces focus @immopatri/cli
           pkg cli/package.json --targets node20-linux-x64 --compress Brotli --output mre
 
       - name: Copy files to remote server
@@ -116,7 +120,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           source: 'base.env,docker-compose.microservices.base.yml,docker-compose.microservices.test.yml,mre'
-          target: microrealestate_ci
+          target: immopatri_ci
 
       - name: Start mre on remote server
         uses: appleboy/ssh-action@v1.0.3
@@ -125,10 +129,10 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            cd microrealestate_ci
-            docker stop $(docker ps -qf "network=microrealestate_ci_net")
-            docker rm $(docker ps -qf "network=microrealestate_ci_net") 
-            docker rmi $(docker images --filter=reference="ghcr.io/microrealestate/microrealestate/*:${{ github.sha }}" -q)
+            cd immopatri_ci
+            docker stop $(docker ps -qf "network=immopatri_ci_net")
+            docker rm $(docker ps -qf "network=immopatri_ci_net") 
+            docker rmi $(docker images --filter=reference="ghcr.io/immopatri/immopatri/*:${{ github.sha }}" -q)
             docker system prune -f
             MRE_VERSION=${{ github.sha }} ./mre ci
 

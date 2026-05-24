@@ -1,7 +1,7 @@
 import '@/app/globals.css';
 import { cn } from '@/utils';
 import { EnvScript } from 'next-runtime-env';
-import { Locale } from '@microrealestate/types';
+import { Locale } from '@immopatri/types';
 import type { Metadata } from 'next';
 import { unstable_noStore as noStore } from 'next/cache';
 import Providers from '@/components/providers';
@@ -9,7 +9,7 @@ import type { ReactNode } from 'react';
 import { Roboto } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
 
-const APP_NAME = process.env.APP_NAME || 'MicroRealEstate';
+const APP_NAME = process.env.APP_NAME || 'ImmoPatri';
 const APP_TITLE = APP_NAME ? [APP_NAME, 'Tenant'] : ['Tenant'];
 if (process.env.NODE_ENV === 'development') {
   APP_TITLE.push('DEV');
@@ -45,7 +45,7 @@ export default async function RootLayout({
         <link rel="icon" href={`${process.env.BASE_PATH}/favicon.svg`} />
         <EnvScript
           env={{
-            NEXT_PUBLIC_APP_NAME: process.env.APP_NAME || 'MicroRealEstate',
+            NEXT_PUBLIC_APP_NAME: process.env.APP_NAME || 'ImmoPatri',
             NEXT_PUBLIC_BASE_PATH: process.env.BASE_PATH,
             NEXT_PUBLIC_CORS_ENABLED: process.env.CORS_ENABLED,
             NEXT_PUBLIC_DEMO_MODE: process.env.DEMO_MODE,

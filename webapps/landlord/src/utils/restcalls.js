@@ -5,6 +5,11 @@ export const QueryKeys = {
   DASHBOARD: 'dashboard',
   ORGANIZATIONS: 'organizations',
   PROPERTIES: 'properties',
+  SITES: 'sites',
+  IMMEUBLES: 'immeubles',
+  PROPRIETAIRES: 'proprietaires',
+  ALERTES: 'alertes',
+  PATRIMOINE_DASHBOARD: 'patrimoineDashboard',
   TENANTS: 'tenants',
   RENTS: 'rents',
   LEASES: 'leases'
@@ -40,6 +45,45 @@ export async function createAppCredentials({ organization, expiryDate }) {
 
 export async function fetchProperties(store) {
   const response = await store.property.fetch();
+  return response.data;
+}
+
+// ── ImmoPatri: hierarchie patrimoniale (DAT Sprint 1) ──
+export async function fetchSites(store) {
+  const response = await store.site.fetch();
+  return response.data;
+}
+
+export async function fetchImmeubles(store, siteId) {
+  const response = await store.immeuble.fetch(siteId);
+  return response.data;
+}
+
+// ── ImmoPatri: proprietaires multiples (DAT Sprint 2) ──
+export async function fetchProprietaires(store) {
+  const response = await store.proprietaire.fetch();
+  return response.data;
+}
+
+export async function fetchProprietairePatrimoine(store, proprietaireId) {
+  const response = await store.proprietaire.patrimoine(proprietaireId);
+  return response.data;
+}
+
+// ── ImmoPatri: tableau de bord patrimoine (DAT Sprint 7) ──
+export async function fetchPatrimoineDashboard() {
+  const response = await apiFetcher().get('/dashboard/patrimoine');
+  return response.data;
+}
+
+// ── ImmoPatri: alertes de conformité DPE & diagnostics (DAT Sprint 3) ──
+export async function fetchAlertes(store, filters) {
+  const response = await store.alerte.fetch(filters);
+  return response.data;
+}
+
+export async function scanAlertes(store) {
+  const response = await store.alerte.scan();
   return response.data;
 }
 

@@ -2,14 +2,19 @@ import { makeObservable, observable } from 'mobx';
 import { setAccessToken, setOrganizationId } from '../utils/fetch';
 
 import Accounting from './Accounting';
+import Alerte from './Alerte';
 import AppHistory from './AppHistory';
 import Dashboard from './Dashboard';
 import Document from './Document';
+import Immeuble from './Immeuble';
 import Lease from './Lease';
 import moment from 'moment';
 import Organization from './Organization';
 import Property from './Property';
+import Proprietaire from './Proprietaire';
+import Rapprochement from './Rapprochement';
 import Rent from './Rent';
+import Site from './Site';
 import Template from './Template';
 import Tenant from './Tenant';
 import User from './User';
@@ -23,6 +28,11 @@ export default class Store {
     this.rent = new Rent();
     this.tenant = new Tenant();
     this.property = new Property();
+    this.site = new Site();
+    this.immeuble = new Immeuble();
+    this.proprietaire = new Proprietaire();
+    this.rapprochement = new Rapprochement();
+    this.alerte = new Alerte();
     this.template = new Template();
     this.document = new Document();
     this.dashboard = new Dashboard();
@@ -35,6 +45,10 @@ export default class Store {
       rent: observable,
       tenant: observable,
       property: observable,
+      site: observable,
+      immeuble: observable,
+      proprietaire: observable,
+      alerte: observable,
       template: observable,
       document: observable,
       dashboard: observable,
@@ -63,6 +77,18 @@ export default class Store {
         items: []
       },
       property = {
+        items: []
+      },
+      site = {
+        items: []
+      },
+      immeuble = {
+        items: []
+      },
+      proprietaire = {
+        items: []
+      },
+      alerte = {
         items: []
       },
       template = {
@@ -119,6 +145,17 @@ export default class Store {
     this.property.items = property.items;
     this.property.selected = property.selected;
     this.property.filters = property.filters;
+
+    this.site.items = site.items;
+    this.site.selected = site.selected;
+
+    this.immeuble.items = immeuble.items;
+    this.immeuble.selected = immeuble.selected;
+
+    this.proprietaire.items = proprietaire.items;
+    this.proprietaire.selected = proprietaire.selected;
+
+    this.alerte.items = alerte.items;
 
     this.template.items = template.items;
     this.template.selected = template.selected;
