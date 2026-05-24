@@ -17,6 +17,7 @@ import {
   DialogTitle
 } from '../../../components/ui/dialog';
 import { fetchProprietaires, QueryKeys } from '../../../utils/restcalls';
+import { LuDownload, LuPlusCircle } from 'react-icons/lu';
 import {
   PROPRIETAIRE_TYPES,
   proprietaireDisplayName,
@@ -26,9 +27,9 @@ import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge } from '../../../components/ui/badge';
 import { Button } from '../../../components/ui/button';
+import { downloadDocument } from '../../../utils/fetch';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
-import { LuPlusCircle } from 'react-icons/lu';
 import Page from '../../../components/Page';
 import { StoreContext } from '../../../store';
 import { toast } from 'sonner';
@@ -208,7 +209,20 @@ function Proprietaires() {
       loading={isLoading}
       dataCy="proprietairesPage"
       ActionBar={
-        <div className="flex justify-end p-2 md:p-0">
+        <div className="flex justify-end gap-2 p-2 md:p-0">
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={() =>
+              downloadDocument({
+                endpoint: '/exports/patrimoine',
+                documentName: 'patrimoine.xlsx'
+              })
+            }
+          >
+            <LuDownload className="size-4" />
+            Exporter le patrimoine
+          </Button>
           <Button className="gap-2" onClick={() => setOpen(true)}>
             <LuPlusCircle className="size-4" />
             Ajouter un propriétaire

@@ -6,10 +6,11 @@ import {
   CardTitle
 } from '../../../components/ui/card';
 import { fetchSites, QueryKeys } from '../../../utils/restcalls';
-import { LuBuilding2, LuPlusCircle } from 'react-icons/lu';
+import { LuBuilding2, LuDownload, LuPlusCircle } from 'react-icons/lu';
 import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/button';
+import { downloadDocument } from '../../../utils/fetch';
 import Page from '../../../components/Page';
 import SiteFormDialog from '../../../components/sites/SiteFormDialog';
 import { StoreContext } from '../../../store';
@@ -40,7 +41,20 @@ function Sites() {
       loading={isLoading}
       dataCy="sitesPage"
       ActionBar={
-        <div className="flex justify-end p-2 md:p-0">
+        <div className="flex justify-end gap-2 p-2 md:p-0">
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={() =>
+              downloadDocument({
+                endpoint: '/exports/etat-locatif',
+                documentName: 'etat-locatif.xlsx'
+              })
+            }
+          >
+            <LuDownload className="size-4" />
+            Exporter l&apos;état locatif
+          </Button>
           <Button className="gap-2" onClick={() => setOpen(true)}>
             <LuPlusCircle className="size-4" />
             Ajouter un site

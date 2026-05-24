@@ -1,5 +1,5 @@
 import { getRentAmounts, RentAmount } from './RentDetails';
-import { LuHistory, LuPaperclip } from 'react-icons/lu';
+import { LuHistory, LuPaperclip, LuReceipt } from 'react-icons/lu';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
@@ -90,6 +90,13 @@ function RentRow({ rent, isSelected, onSelect, onEdit, onHistory }) {
   const store = useContext(StoreContext);
   const rentAmounts = getRentAmounts(rent);
 
+  const handleQuittance = useCallback(() => {
+    downloadDocument({
+      endpoint: `/documents/quittance/${rent.occupant._id}/${rent.term}`,
+      documentName: `${rent.occupant.name}-${t('receipt')}-${rent.term}.pdf`
+    });
+  }, [rent, t]);
+
   return (
     <>
       <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center">
@@ -153,6 +160,13 @@ function RentRow({ rent, isSelected, onSelect, onEdit, onHistory }) {
             />
           </div>
           <div className="text-right space-x-2 grow whitespace-nowrap">
+            {rentAmounts.payment > 0 ? (
+              <Tooltip title={t('Download the rent receipt')}>
+                <Button variant="ghost" size="icon" onClick={handleQuittance}>
+                  <LuReceipt className="size-6" />
+                </Button>
+              </Tooltip>
+            ) : null}
             <Button
               variant="ghost"
               size="icon"

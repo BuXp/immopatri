@@ -2,6 +2,7 @@ import * as accountingManager from './managers/accountingmanager.js';
 import * as alerteManager from './managers/alertemanager.js';
 import * as dashboardManager from './managers/dashboardmanager.js';
 import * as emailManager from './managers/emailmanager.js';
+import * as exportManager from './managers/exportmanager.js';
 import * as immeubleManager from './managers/immeublemanager.js';
 import * as leaseManager from './managers/leasemanager.js';
 import * as occupantManager from './managers/occupantmanager.js';
@@ -153,6 +154,18 @@ export default function routes() {
     Middlewares.asyncWrapper(alerteManager.acknowledge)
   );
   router.use('/alertes', alertesRouter);
+
+  // ── ImmoPatri: exports Excel (DAT Sprint 5) ──
+  const exportsRouter = express.Router();
+  exportsRouter.get(
+    '/etat-locatif',
+    Middlewares.asyncWrapper(exportManager.etatLocatif)
+  );
+  exportsRouter.get(
+    '/patrimoine',
+    Middlewares.asyncWrapper(exportManager.patrimoine)
+  );
+  router.use('/exports', exportsRouter);
 
   router.get(
     '/accounting/:year',

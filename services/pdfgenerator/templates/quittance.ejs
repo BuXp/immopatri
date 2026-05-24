@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<%- include('/partials/htmlhead.ejs') %>
+
+	<body>
+		<% tenant.rents.forEach(function(rent) { %>
+			<div class="page invoice">
+				<%- include('partials/header.ejs') %>
+
+					<%- include('partials/customeraddress.ejs') %>
+
+						<%- include('partials/placeanddate.ejs', {rent: rent}) %>
+
+							<div class="title">
+								Quittance de loyer
+							</div>
+
+							<%- include('partials/customerreference.ejs', { rent: rent }) %>
+
+								<div class="items">
+									<p>
+										Je soussigné(e) <strong><%= landlord.name %></strong>, bailleur,
+										reconnais avoir reçu de <strong><%= tenant.name %></strong>
+										la somme de
+										<strong><%= _.formatNumber(rent.total.payment, 'currency') %></strong>
+										au titre du loyer et des charges pour la période
+										<strong><%= _.formatTerm(rent.period, tenant.contract.lease.timeRange) %></strong>,
+										et lui en donne quittance, sous réserve d'encaissement effectif.
+									</p>
+									<table>
+										<tr>
+											<td class="total-line">Loyer et charges</td>
+											<td class="total-value"><%= _.formatNumber(rent.total.grandTotal, 'currency') %></td>
+										</tr>
+										<tr>
+											<td class="total-line">Montant réglé</td>
+											<td class="total-value"><%= _.formatNumber(rent.total.payment, 'currency') %></td>
+										</tr>
+										<tr>
+											<td class="total-line">Solde restant dû</td>
+											<td class="total-value"><%= _.formatNumber(rent.total.newBalance > 0 ? rent.total.newBalance : 0, 'currency') %></td>
+										</tr>
+									</table>
+									<p>
+										Cette quittance annule tous les reçus qui auraient pu être
+										établis précédemment pour la même période.
+									</p>
+								</div>
+
+								<%- include('partials/ownermanagersignature.ejs') %>
+								<%- include('partials/footer.ejs') %>
+			</div>
+			<% }); %>
+	</body>
+
+</html>
