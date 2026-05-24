@@ -23,7 +23,9 @@ const ProprietaireSchema = new mongoose.Schema<CollectionTypes.Proprietaire>({
   assurances: [
     {
       _id: false,
-      type: String,
+      // Wrapped so Mongoose keeps the array as subdocuments with a `type`
+      // field instead of collapsing it to an array of String.
+      type: { type: String },
       assureur: String,
       numero: String,
       expiration: Date
@@ -31,6 +33,7 @@ const ProprietaireSchema = new mongoose.Schema<CollectionTypes.Proprietaire>({
   ],
   documents: [String],
   valeurEstimePatrimoine: Number,
+  anonymise: Boolean,
 
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }

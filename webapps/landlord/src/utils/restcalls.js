@@ -9,6 +9,7 @@ export const QueryKeys = {
   IMMEUBLES: 'immeubles',
   PROPRIETAIRES: 'proprietaires',
   ALERTES: 'alertes',
+  PATRIMOINE_DASHBOARD: 'patrimoineDashboard',
   TENANTS: 'tenants',
   RENTS: 'rents',
   LEASES: 'leases'
@@ -66,6 +67,12 @@ export async function fetchProprietaires(store) {
 
 export async function fetchProprietairePatrimoine(store, proprietaireId) {
   const response = await store.proprietaire.patrimoine(proprietaireId);
+  return response.data;
+}
+
+// ── ImmoPatri: tableau de bord patrimoine (DAT Sprint 7) ──
+export async function fetchPatrimoineDashboard() {
+  const response = await apiFetcher().get('/dashboard/patrimoine');
   return response.data;
 }
 

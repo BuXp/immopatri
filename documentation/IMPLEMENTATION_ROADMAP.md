@@ -36,7 +36,9 @@ server-side exigé au DAT 3.6.
 | 4 | Copropriété & modes de détention | ✅ Schéma corrigé (bug Mongoose `type`) + champs copro + répartition par tantièmes + CRUD des appels de charges |
 | 5 | Exports PDF/Excel & quittances | ✅ Quittance de loyer PDF (template pdfgenerator) + exports Excel (.xlsx) état locatif & patrimoine |
 | 6 | Rapprochement bancaire CSV | ✅ Parseur CSV + matching libellé/montant + suggestions + application via le flux de paiement existant |
-| 7–9 | Tableau de bord, conformité RGPD, hardening | ⬛ À faire |
+| 7 | Tableau de bord patrimoine | ✅ KPIs (sites/immeubles/lots, occupation, loyers, alertes) — API + cartes UI |
+| 8 | Conformité RGPD | ✅ Export des données personnelles + anonymisation des propriétaires |
+| 9 | Hardening | ✅ Bornage des entrées (CSV), masquage PII, anti-traversée + doc de durcissement |
 
 ## Prochaines étapes recommandées
 

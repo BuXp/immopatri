@@ -17,7 +17,8 @@ export default class Proprietaire {
       patrimoine: flow,
       create: flow,
       update: flow,
-      delete: flow
+      delete: flow,
+      anonymiser: flow
     });
   }
 
@@ -98,6 +99,20 @@ export default class Proprietaire {
     try {
       yield apiFetcher().delete(`/proprietaires/${ids.join(',')}`);
       return { status: 200 };
+    } catch (error) {
+      return { status: error?.response?.status };
+    }
+  }
+
+  // GDPR right to erasure (DAT Sprint 8).
+  *anonymiser(proprietaireId) {
+    try {
+      const response = yield apiFetcher().post(
+        `/rgpd/proprietaires/${proprietaireId}/anonymisation`
+      );
+      const updated = response.data;
+      this.items = updateItems(updated, this.items);
+      return { status: 200, data: updated };
     } catch (error) {
       return { status: error?.response?.status };
     }

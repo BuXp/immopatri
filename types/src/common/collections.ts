@@ -287,6 +287,7 @@ export namespace CollectionTypes {
     }[];
     documents?: string[];
     valeurEstimePatrimoine?: number;
+    anonymise?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
   };

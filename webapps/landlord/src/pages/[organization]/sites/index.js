@@ -12,6 +12,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/button';
 import { downloadDocument } from '../../../utils/fetch';
 import Page from '../../../components/Page';
+import PatrimoineOverview from '../../../components/dashboard/PatrimoineOverview';
 import SiteFormDialog from '../../../components/sites/SiteFormDialog';
 import { StoreContext } from '../../../store';
 import { toast } from 'sonner';
@@ -63,6 +64,7 @@ function Sites() {
       }
     >
       <h1 className="text-2xl font-semibold mb-4">Sites</h1>
+      <PatrimoineOverview />
       {sites.length === 0 ? (
         <p className="text-muted-foreground">
           Aucun site pour le moment. Créez votre premier site.

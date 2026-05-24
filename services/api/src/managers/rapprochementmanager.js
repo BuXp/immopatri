@@ -1,5 +1,6 @@
 import { parseBankCsv, reconcile } from '../services/bankreconciliation.js';
 import { Collections } from '@immopatri/common';
+import { csvLimitErrors } from '../services/security.js';
 
 function buildTerm(year, month) {
   return Number(`${year}${String(month).padStart(2, '0')}0100`);
@@ -14,6 +15,13 @@ export async function analyse(req, res) {
 
   if (!year || !month) {
     return res.status(422).json({ errors: ['year and month are required'] });
+  }
+
+  if (!Array.isArray(rawTransactions)) {
+    const limitErrors = csvLimitErrors(csv || '');
+    if (limitErrors.length) {
+      return res.status(413).json({ errors: limitErrors });
+    }
   }
 
   const term = buildTerm(year, month);

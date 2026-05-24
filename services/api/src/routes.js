@@ -11,6 +11,7 @@ import * as proprietaireManager from './managers/proprietairemanager.js';
 import * as rapprochementManager from './managers/rapprochementmanager.js';
 import * as realmManager from './managers/realmmanager.js';
 import * as rentManager from './managers/rentmanager.js';
+import * as rgpdManager from './managers/rgpdmanager.js';
 import * as siteManager from './managers/sitemanager.js';
 import { Middlewares, Service } from '@immopatri/common';
 import express from 'express';
@@ -36,6 +37,10 @@ export default function routes() {
 
   const dashboardRouter = express.Router();
   dashboardRouter.get('/', Middlewares.asyncWrapper(dashboardManager.all));
+  dashboardRouter.get(
+    '/patrimoine',
+    Middlewares.asyncWrapper(dashboardManager.patrimoine)
+  );
   router.use('/dashboard', dashboardRouter);
 
   const leasesRouter = express.Router();
@@ -173,6 +178,18 @@ export default function routes() {
     '/rapprochement',
     Middlewares.asyncWrapper(rapprochementManager.analyse)
   );
+
+  // ── ImmoPatri: conformité RGPD (DAT Sprint 8) ──
+  const rgpdRouter = express.Router();
+  rgpdRouter.get(
+    '/proprietaires/:id/export',
+    Middlewares.asyncWrapper(rgpdManager.exportProprietaire)
+  );
+  rgpdRouter.post(
+    '/proprietaires/:id/anonymisation',
+    Middlewares.asyncWrapper(rgpdManager.anonymiser)
+  );
+  router.use('/rgpd', rgpdRouter);
 
   router.get(
     '/accounting/:year',

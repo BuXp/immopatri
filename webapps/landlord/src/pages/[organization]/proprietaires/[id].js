@@ -22,6 +22,8 @@ import {
 } from '../../../components/ui/tabs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge } from '../../../components/ui/badge';
+import { Button } from '../../../components/ui/button';
+import { downloadDocument } from '../../../utils/fetch';
 import EntityDocuments from '../../../components/EntityDocuments';
 import Link from 'next/link';
 import { LuChevronRight } from 'react-icons/lu';
@@ -68,6 +70,31 @@ function ProprietaireDetail() {
       queryKey: [QueryKeys.PROPRIETAIRES, id, 'patrimoine']
     });
   };
+
+  const handleExportRgpd = () =>
+    downloadDocument({
+      endpoint: `/rgpd/proprietaires/${id}/export`,
+      documentName: `rgpd-proprietaire-${id}.json`
+    });
+
+  const handleAnonymiser = async () => {
+    if (
+      !window.confirm(
+        'Anonymiser ce propriétaire ? Ses données personnelles (nom, contact, IBAN…) seront effacées de façon irréversible.'
+      )
+    ) {
+      return;
+    }
+    const { status } = await store.proprietaire.anonymiser(id);
+    if (status !== 200) {
+      toast.error("Erreur lors de l'anonymisation");
+      return;
+    }
+    toast.success('Propriétaire anonymisé');
+    queryClient.invalidateQueries({
+      queryKey: [QueryKeys.PROPRIETAIRES, id, 'patrimoine']
+    });
+  };
   const sites = data?.sites || [];
   const immeubles = data?.immeubles || [];
   const lots = data?.lots || [];
@@ -103,6 +130,19 @@ function ProprietaireDetail() {
             {proprietaireDisplayName(proprietaire)}
           </h1>
           <Badge variant="secondary">{proprietaire.type || 'physique'}</Badge>
+        </div>
+        <div className="ml-auto flex gap-2">
+          <Button variant="outline" size="sm" onClick={handleExportRgpd}>
+            Exporter (RGPD)
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleAnonymiser}
+            disabled={proprietaire.anonymise}
+          >
+            Anonymiser
+          </Button>
         </div>
       </div>
 
