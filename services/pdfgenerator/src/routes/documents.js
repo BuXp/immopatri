@@ -260,7 +260,12 @@ export default function () {
         throw new ServiceError('forbidden', 403);
       }
 
-      const filePath = path.join(UPLOADS_DIRECTORY, url);
+      // Resolve and confirm the path stays within the uploads directory.
+      const baseDir = path.resolve(UPLOADS_DIRECTORY);
+      const filePath = path.resolve(baseDir, url);
+      if (filePath !== baseDir && !filePath.startsWith(baseDir + path.sep)) {
+        throw new ServiceError('forbidden', 403);
+      }
       if (fs.existsSync(filePath)) {
         return fs.createReadStream(filePath).pipe(res);
       }

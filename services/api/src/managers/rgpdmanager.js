@@ -19,10 +19,11 @@ export async function exportProprietaire(req, res) {
     'proprietaires.proprietaireId': req.params.id
   }).lean();
   const data = buildProprietairePersonalData(proprietaire, lots);
+  const safeId = String(req.params.id).replace(/[^a-zA-Z0-9_-]/g, '');
   res.header('Content-Type', 'application/json');
   res.header(
     'Content-Disposition',
-    `attachment; filename="rgpd-proprietaire-${req.params.id}.json"`
+    `attachment; filename="rgpd-proprietaire-${safeId}.json"`
   );
   return res.send(JSON.stringify(data, null, 2));
 }
