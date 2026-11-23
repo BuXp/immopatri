@@ -39,6 +39,7 @@ server-side exigé au DAT 3.6.
 | 7 | Tableau de bord patrimoine | ✅ KPIs (sites/immeubles/lots, occupation, loyers, alertes) — API + cartes UI |
 | 8 | Conformité RGPD | ✅ Export des données personnelles + anonymisation des propriétaires |
 | 9 | Hardening | ✅ Bornage des entrées (CSV), masquage PII, anti-traversée + doc de durcissement |
+| Module 16 (DAT v1.1) | États des lieux guidés par photos | ✅ Collections + services purs testés (isolation coloc, immuabilité, « réponse manquante ≠ bon état ») + API propriétaire + parcours locataire JWT + UI minimal |
 
 ## Prochaines étapes recommandées
 

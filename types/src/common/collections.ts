@@ -425,4 +425,172 @@ export namespace CollectionTypes {
 
     stepperMode: boolean;
   };
+
+  // ── Module 16 — États des lieux guidés par photos (DAT v1.1) ──
+  export type EdlPieceConfig = {
+    id: string;
+    nom: string;
+    nomPersonnalise?: string;
+    type: string;
+    estPrivative?: boolean;
+    chambreId?: string;
+    equipements?: {
+      id: string;
+      nom: string;
+      type?: string;
+      quantite?: number;
+      notes?: string;
+    }[];
+  };
+
+  export type ConfigurationLogement = {
+    _id: string;
+    realmId: string;
+    lotId: string;
+    typeLocation: 'entier' | 'colocation';
+    modeleDepartId?: string;
+    pieces: EdlPieceConfig[];
+    annexes?: { id: string; type: string; nom?: string }[];
+    createdAt?: Date;
+    updatedAt?: Date;
+  };
+
+  export type EdlObservation = {
+    elementId: string;
+    etat?: 'tres_bon' | 'bon' | 'use' | 'degrade' | 'non_verifiable' | null;
+    proprete?: 'propre' | 'traces_legeres' | 'sale' | 'non_verifiable' | null;
+    fonctionnement?:
+      | 'fonctionne'
+      | 'partiellement'
+      | 'ne_fonctionne_pas'
+      | 'non_teste'
+      | null;
+    reponseSpeciale?:
+      | 'absent'
+      | 'non_concerne'
+      | 'inaccessible'
+      | 'non_teste'
+      | 'non_verifiable';
+    signalement?: boolean;
+    commentaire?: string;
+    photos?: string[];
+  };
+
+  export type EdlPhoto = {
+    elementId: string;
+    elementNom?: string;
+    cheminMinio: string;
+    dateReception: Date;
+    resolution?: { largeur: number; hauteur: number };
+    hashSHA256?: string;
+    estOriginal: boolean;
+    importeExternalement?: boolean;
+  };
+
+  export type DossierEdl = {
+    _id: string;
+    realmId: string;
+    lotId: string;
+    locataireId: string;
+    chambreId?: string;
+    type: 'entree' | 'sortie';
+    statut:
+      | 'a_envoyer'
+      | 'en_cours'
+      | 'transmis'
+      | 'a_completer'
+      | 'finalise'
+      | 'signe';
+    lienToken?: string;
+    lienExpiration?: Date;
+    dateCreation?: Date;
+    dateDernierAcces?: Date;
+    dateTransmission?: Date;
+    dateSignature?: Date;
+    pieces: {
+      pieceId: string;
+      nom: string;
+      photos: EdlPhoto[];
+      observations: EdlObservation[];
+    }[];
+    compteurs?: {
+      id: string;
+      type: string;
+      index?: number;
+      unite?: string;
+      photo?: string;
+    }[];
+    cles?: { type: string; quantite: number }[];
+    inventaire?: { article: string; quantite: number }[];
+    detectionFumee?: {
+      presente?: boolean;
+      testEffectue?: boolean;
+      resultat?: string;
+    };
+    versions?: {
+      numero: number;
+      date: Date;
+      auteur?: string;
+      action: string;
+    }[];
+  };
+
+  export type ComparaisonSignalementType =
+    | 'tache'
+    | 'rayure'
+    | 'trou'
+    | 'casse'
+    | 'salissure'
+    | 'element_manquant'
+    | 'changement_equipement'
+    | 'autre';
+
+  export type ComparaisonStatutValidation =
+    | 'en_attente'
+    | 'confirme'
+    | 'ecarte'
+    | 'complement_demande';
+
+  export type ComparaisonEdl = {
+    _id: string;
+    realmId: string;
+    dossierEntreeId: string;
+    dossierSortieId: string;
+    proprietaireId?: string;
+    statut: 'en_attente' | 'en_cours' | 'termine';
+    statutGlobal?: string;
+    dateAnalyseIA?: Date;
+    dateValidationHumaine?: Date;
+    resultats: {
+      pieceId: string;
+      elementId: string;
+      typeSignalement: ComparaisonSignalementType;
+      descriptionFactuelle: string;
+      niveauConfiance: number;
+      statutValidation: ComparaisonStatutValidation;
+      commentaireProprietaire?: string;
+      photosEntree?: string[];
+      photosSortie?: string[];
+      zoneSignalee?: {
+        x: number;
+        y: number;
+        largeur: number;
+        hauteur: number;
+      };
+    }[];
+  };
+
+  export type HistoriqueCommun = {
+    _id: string;
+    realmId: string;
+    lotId: string;
+    pieceId: string;
+    seriesPhotos: {
+      dossierEdlId: string;
+      locataireId: string;
+      type: 'entree' | 'sortie';
+      date: Date;
+      photos: string[];
+    }[];
+  };
 }

@@ -1,6 +1,10 @@
 import * as accountingManager from './managers/accountingmanager.js';
 import * as alerteManager from './managers/alertemanager.js';
 import * as dashboardManager from './managers/dashboardmanager.js';
+import * as edlComparaisonManager from './managers/edlcomparaisonmanager.js';
+import * as edlConfigManager from './managers/edlconfigmanager.js';
+import * as edlDossierManager from './managers/edldossiermanager.js';
+import * as edlParcoursManager from './managers/edlparcoursmanager.js';
 import * as emailManager from './managers/emailmanager.js';
 import * as exportManager from './managers/exportmanager.js';
 import * as immeubleManager from './managers/immeublemanager.js';
@@ -179,6 +183,62 @@ export default function routes() {
     Middlewares.asyncWrapper(rapprochementManager.analyse)
   );
 
+  // ── Module 16 — États des lieux guidés par photos (DAT v1.1) ──────────
+  const edlRouter = express.Router();
+  // Configuration du lot
+  edlRouter.get(
+    '/configurations/:lotId',
+    Middlewares.asyncWrapper(edlConfigManager.one)
+  );
+  edlRouter.put(
+    '/configurations',
+    Middlewares.asyncWrapper(edlConfigManager.upsert)
+  );
+  edlRouter.post(
+    '/configurations/modele',
+    Middlewares.asyncWrapper(edlConfigManager.appliquerModele)
+  );
+  // Dossiers EDL (propriétaire)
+  edlRouter.get('/dossiers', Middlewares.asyncWrapper(edlDossierManager.list));
+  edlRouter.post(
+    '/dossiers',
+    Middlewares.asyncWrapper(edlDossierManager.creer)
+  );
+  edlRouter.get(
+    '/dossiers/:id',
+    Middlewares.asyncWrapper(edlDossierManager.one)
+  );
+  edlRouter.post(
+    '/dossiers/:id/signer',
+    Middlewares.asyncWrapper(edlDossierManager.signer)
+  );
+  edlRouter.get(
+    '/dossiers/:id/rapport',
+    Middlewares.asyncWrapper(edlDossierManager.rapport)
+  );
+  // Comparaisons IA
+  edlRouter.post(
+    '/comparaisons',
+    Middlewares.asyncWrapper(edlComparaisonManager.creer)
+  );
+  edlRouter.post(
+    '/comparaisons/dry-run',
+    Middlewares.asyncWrapper(edlComparaisonManager.dryRun)
+  );
+  edlRouter.get(
+    '/comparaisons',
+    Middlewares.asyncWrapper(edlComparaisonManager.list)
+  );
+  edlRouter.get(
+    '/comparaisons/:id',
+    Middlewares.asyncWrapper(edlComparaisonManager.one)
+  );
+  edlRouter.patch(
+    '/comparaisons/:id/items/:index',
+    Middlewares.asyncWrapper(edlComparaisonManager.validerItem)
+  );
+  router.use('/edl', edlRouter);
+
   // ── ImmoPatri: conformité RGPD (DAT Sprint 8) ──
   const rgpdRouter = express.Router();
   rgpdRouter.get(
@@ -213,6 +273,39 @@ export default function routes() {
   router.use('/emails', emailRouter);
 
   const apiRouter = express.Router();
+
+  // ── Parcours locataire EDL — token JWT, aucune auth propriétaire ───────
+  // MONTÉ AVANT le router protégé : Express matche par préfixe dans l'ordre
+  // d'enregistrement, donc cette route doit court-circuiter needAccessToken.
+  const parcoursRouter = express.Router();
+  parcoursRouter.use(express.json({ limit: '2mb' }));
+  parcoursRouter.get(
+    '/:token',
+    Middlewares.asyncWrapper(edlParcoursManager.middleware),
+    Middlewares.asyncWrapper(edlParcoursManager.getParcours)
+  );
+  parcoursRouter.post(
+    '/:token/photo',
+    Middlewares.asyncWrapper(edlParcoursManager.middleware),
+    Middlewares.asyncWrapper(edlParcoursManager.registerPhoto)
+  );
+  parcoursRouter.put(
+    '/:token/observation',
+    Middlewares.asyncWrapper(edlParcoursManager.middleware),
+    Middlewares.asyncWrapper(edlParcoursManager.saveObservation)
+  );
+  parcoursRouter.post(
+    '/:token/compteur',
+    Middlewares.asyncWrapper(edlParcoursManager.middleware),
+    Middlewares.asyncWrapper(edlParcoursManager.saveCompteur)
+  );
+  parcoursRouter.post(
+    '/:token/transmettre',
+    Middlewares.asyncWrapper(edlParcoursManager.middleware),
+    Middlewares.asyncWrapper(edlParcoursManager.transmettre)
+  );
+  apiRouter.use('/api/v2/edl/parcours', parcoursRouter);
+
   apiRouter.use('/api/v2', router);
 
   return apiRouter;

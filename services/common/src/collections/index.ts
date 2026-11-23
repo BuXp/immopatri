@@ -2,8 +2,12 @@ import mongoose from 'mongoose';
 
 export { default as Account } from './account.js';
 export { default as Alerte } from './alerte.js';
+export { default as ComparaisonEdl } from './comparaisonedl.js';
+export { default as ConfigurationLogement } from './configurationlogement.js';
 export { default as Document } from './document.js';
+export { default as DossierEdl } from './dossieredl.js';
 export { default as Email } from './email.js';
+export { default as HistoriqueCommun } from './historiquecommun.js';
 export { default as Immeuble } from './immeuble.js';
 export { default as Lease } from './lease.js';
 export { default as Property } from './property.js';

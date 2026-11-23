@@ -1,6 +1,7 @@
 import {
   LuArrowRightLeft,
   LuBuilding2,
+  LuCamera,
   LuKeyRound,
   LuLayoutDashboard,
   LuMenu,
@@ -82,6 +83,13 @@ const menuItems = [
     pathname: '/conformite',
     Icon: LuShieldCheck,
     dataCy: 'conformiteNav'
+  },
+  {
+    key: 'edl',
+    labelId: 'États des lieux',
+    pathname: '/edl',
+    Icon: LuCamera,
+    dataCy: 'edlNav'
   },
   {
     key: 'accounting',
