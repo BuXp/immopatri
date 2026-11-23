@@ -3,19 +3,19 @@ import {
   CardContent,
   CardHeader,
   CardTitle
-} from '../../../../../components/ui/card';
+} from '../../../../components/ui/card';
 import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button } from '../../../../../components/ui/button';
-import { Input } from '../../../../../components/ui/input';
-import { Label } from '../../../../../components/ui/label';
+import { Button } from '../../../../components/ui/button';
+import { Input } from '../../../../components/ui/input';
+import { Label } from '../../../../components/ui/label';
 import moment from 'moment';
-import Page from '../../../../../components/Page';
-import { QueryKeys } from '../../../../../utils/restcalls';
-import { StoreContext } from '../../../../../store';
+import Page from '../../../../components/Page';
+import { QueryKeys } from '../../../../utils/restcalls';
+import { StoreContext } from '../../../../store';
 import { toast } from 'sonner';
 import { useRouter } from 'next/router';
-import { withAuthentication } from '../../../../../components/Authentication';
+import { withAuthentication } from '../../../../components/Authentication';
 
 const MODELES = [
   { id: 'studio', label: 'Studio' },

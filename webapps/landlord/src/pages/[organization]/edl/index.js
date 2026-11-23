@@ -5,20 +5,20 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '../../../../components/ui/table';
+} from '../../../components/ui/table';
 import { useContext, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Badge } from '../../../../components/ui/badge';
-import { Button } from '../../../../components/ui/button';
+import { Badge } from '../../../components/ui/badge';
+import { Button } from '../../../components/ui/button';
 import Link from 'next/link';
 import moment from 'moment';
-import Page from '../../../../components/Page';
-import { QueryKeys } from '../../../../utils/restcalls';
-import { StoreContext } from '../../../../store';
+import Page from '../../../components/Page';
+import { QueryKeys } from '../../../utils/restcalls';
+import { StoreContext } from '../../../store';
 import { toast } from 'sonner';
 import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
-import { withAuthentication } from '../../../../components/Authentication';
+import { withAuthentication } from '../../../components/Authentication';
 
 const STATUT_LABELS = {
   a_envoyer: { label: 'À envoyer', variant: 'secondary' },
