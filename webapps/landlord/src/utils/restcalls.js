@@ -10,6 +10,9 @@ export const QueryKeys = {
   PROPRIETAIRES: 'proprietaires',
   ALERTES: 'alertes',
   PATRIMOINE_DASHBOARD: 'patrimoineDashboard',
+  EDL_DOSSIERS: 'edlDossiers',
+  EDL_CONFIGURATION: 'edlConfiguration',
+  EDL_COMPARAISON: 'edlComparaison',
   TENANTS: 'tenants',
   RENTS: 'rents',
   LEASES: 'leases'

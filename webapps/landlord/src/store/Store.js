@@ -6,6 +6,7 @@ import Alerte from './Alerte';
 import AppHistory from './AppHistory';
 import Dashboard from './Dashboard';
 import Document from './Document';
+import Edl from './Edl';
 import Immeuble from './Immeuble';
 import Lease from './Lease';
 import moment from 'moment';
@@ -33,6 +34,7 @@ export default class Store {
     this.proprietaire = new Proprietaire();
     this.rapprochement = new Rapprochement();
     this.alerte = new Alerte();
+    this.edl = new Edl();
     this.template = new Template();
     this.document = new Document();
     this.dashboard = new Dashboard();
@@ -49,6 +51,7 @@ export default class Store {
       immeuble: observable,
       proprietaire: observable,
       alerte: observable,
+      edl: observable,
       template: observable,
       document: observable,
       dashboard: observable,
